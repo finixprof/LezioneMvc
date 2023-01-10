@@ -18,9 +18,19 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        public IActionResult Privacy1()
+        public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult Personale()
+        {
+            //Recupero dei dati da database
+
+            //creazione del modello da passare alla view
+            var model = new PersonaleViewModel();
+            model.Testo = "Lista del personale.";
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

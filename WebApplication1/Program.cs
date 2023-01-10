@@ -1,3 +1,5 @@
+using WebApplication1.Helpers;
+
 namespace WebApplication1
 {
     public class Program
@@ -29,6 +31,9 @@ namespace WebApplication1
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            DatabaseHelper.ConnectionString=
+
 
             app.Run();
         }
