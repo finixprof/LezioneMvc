@@ -5,3 +5,27 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>@Model.Testo</p>
+
+@foreach (var item in Model.ListaPersonale)
+{
+    <div class="row">
+        <div class="col-md-2">
+            @item.Cognome
+        </div>
+        <div class="col-md-2">
+            @item.DataNascita.ToShortDateString()
+        </div>
+        <div class="col-md-2">
+            @item.Professione
+        </div>
+        <div class="col-md-2">
+            @item.Reparto
+        </div>
+        <div class="col-md-2">
+            @String.Format("€ {0:00.00}", item.Stipendio)
+        </div>
+        <div class="col-md-2">
+            @item.Superiore
+        </div>
+    </div>
+}

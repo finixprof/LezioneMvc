@@ -32,7 +32,7 @@ namespace WebApplication1
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            DatabaseHelper.ConnectionString=
+            DatabaseHelper.ConnectionString = builder.Configuration.GetConnectionString("Ospedale");
 
 
             app.Run();

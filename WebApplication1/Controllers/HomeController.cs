@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using WebApplication1.Helpers;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -26,9 +27,10 @@ namespace WebApplication1.Controllers
         public IActionResult Personale()
         {
             //Recupero dei dati da database
-
+            var listaPersonale = DatabaseHelper.GetAllPersonale();
             //creazione del modello da passare alla view
             var model = new PersonaleViewModel();
+            model.ListaPersonale = listaPersonale;
             model.Testo = "Lista del personale.";
             return View(model);
         }
