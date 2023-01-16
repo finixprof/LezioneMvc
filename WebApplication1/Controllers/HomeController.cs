@@ -35,6 +35,17 @@ namespace WebApplication1.Controllers
             return View(model);
         }
 
+        public IActionResult DettaglioPersonale(int id)
+        {
+            //Recupero dei dati da database con filtro id
+            var personale = DatabaseHelper.GetPersonaleById(id);
+            //creazione del modello da passare alla view
+            var model = new DettaglioPersonaleViewModel();
+            model.Item = personale;
+            model.Testo = "Dati del dipendente personale.";
+            return View(model);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

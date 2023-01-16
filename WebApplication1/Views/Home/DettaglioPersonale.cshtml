@@ -1,0 +1,48 @@
+﻿@model WebApplication1.Models.DettaglioPersonaleViewModel
+@{
+    ViewData["Title"] = Model.Item.Cognome;
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>@Model.Testo</p>
+
+<div class="row">
+    <div class="col-md-2">
+        Data di Nascita
+    </div>
+    <div class="col-md-2">
+        @Model.Item.DataNascita.ToShortDateString()
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        Professione
+    </div>
+    <div class="col-md-2">
+        @Model.Item.Professione
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        Reparto
+    </div>
+    <div class="col-md-2">
+        @Model.Item.Reparto
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        Stipendio
+    </div>
+    <div class="col-md-2">
+        @String.Format("€ {0:00.00}", Model.Item.Stipendio)
+    </div>
+</div>
+@if (Model.Item.Superiore > 0)
+{
+    <div class="row">
+        <div class="col-md-2">
+            <a asp-controller="Home" asp-action="DettaglioPersonale" asp-route-id="@Model.Item.Superiore">Superiore</a>
+        </div>
+    </div>
+}

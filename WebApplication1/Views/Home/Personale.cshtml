@@ -6,11 +6,31 @@
 
 <p>@Model.Testo</p>
 
+<div class="row">
+    <div class="col-md-2">
+        Cognome
+    </div>
+    <div class="col-md-2">
+        Data di Nascita
+    </div>
+    <div class="col-md-2">
+        Professione
+    </div>
+    <div class="col-md-2">
+        Reparto
+    </div>
+    <div class="col-md-2">
+        Stipendio
+    </div>
+    <div class="col-md-2">
+        Superiore
+    </div>
+</div>
 @foreach (var item in Model.ListaPersonale)
 {
     <div class="row">
         <div class="col-md-2">
-            @item.Cognome
+            <a asp-controller="Home" asp-action="DettaglioPersonale" asp-route-id="@item.Id">@item.Cognome</a>
         </div>
         <div class="col-md-2">
             @item.DataNascita.ToShortDateString()
