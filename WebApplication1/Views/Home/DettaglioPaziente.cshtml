@@ -1,0 +1,47 @@
+﻿@model WebApplication1.Models.DettaglioPazienteViewModel
+@{
+    ViewData["Title"] = Model.Item.Nome;
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>@Model.Testo</p>
+
+@if (Model.Item != null)
+{
+    <div class="row">
+        <div class="col-md-2">
+            Data di Nascita
+        </div>
+        <div class="col-md-2">
+            @Model.Item.DataNascita.ToShortDateString()
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            Provincia
+        </div>
+        <div class="col-md-2">
+            @Model.Item.Provincia
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            Sesso
+        </div>
+        <div class="col-md-2">
+            @if (Model.Item.Sesso=='F')
+            {
+                <img src="/imgs/female.jpg" width="40" />
+            }
+            else if (Model.Item.Sesso == 'M')
+            {
+                <img src="/imgs/male.jpg" width="40" />
+            }
+            else
+            {
+                <img src="/imgs/extra.png" width="40" />
+            }
+        </div>
+    </div>
+
+}

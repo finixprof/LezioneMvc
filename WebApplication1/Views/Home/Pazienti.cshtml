@@ -1,0 +1,39 @@
+﻿@model WebApplication1.Models.PazientiViewModel
+@{
+    ViewData["Title"] = "Pazienti";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>@Model.Testo</p>
+
+<div class="row">
+    <div class="col-md-2">
+        Nnome
+    </div>
+    <div class="col-md-2">
+        Data di Nascita
+    </div>
+    <div class="col-md-2">
+        Provincia
+    </div>
+    <div class="col-md-2">
+        Sesso
+    </div>
+</div>
+@foreach (var item in Model.ListaPazienti)
+{
+    <div class="row">
+        <div class="col-md-2">
+            <a asp-controller="Home" asp-action="DettaglioPaziente" asp-route-id="@item.Id">@item.Nome</a>
+        </div>
+        <div class="col-md-2">
+            @item.DataNascita.ToShortDateString()
+        </div>
+        <div class="col-md-2">
+            @item.Provincia
+        </div>
+        <div class="col-md-2">
+            @item.Sesso
+        </div>
+    </div>
+}

@@ -46,6 +46,34 @@ namespace WebApplication1.Controllers
             return View(model);
         }
 
+
+        public IActionResult Pazienti()
+        {
+            //Recupero dei dati da database
+            var listaPazienti = DatabaseHelper.GetAllPazienti();
+            //creazione del modello da passare alla view
+            var model = new PazientiViewModel();
+            model.ListaPazienti = listaPazienti;
+            model.Testo = "Lista del pazienti.";
+            return View(model);
+        }
+
+        public IActionResult DettaglioPaziente(int id)
+        {
+            //Recupero dei dati da database con filtro id
+            var paziente = DatabaseHelper.GetPazienteById(id);
+            var model = new DettaglioPazienteViewModel();
+            if (paziente == null)
+            {
+                model.Testo = "Errore, paziente non trovato";
+                return View(model);
+            }
+            //creazione del modello da passare alla view
+            model.Item = paziente;
+            model.Testo = "Dati del paziente.";
+            return View(model);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

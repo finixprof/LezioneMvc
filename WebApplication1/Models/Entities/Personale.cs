@@ -1,17 +1,15 @@
 ﻿namespace WebApplication1.Models.Entities
 {
-    public class Personale
+    public class Paziente
     {
         public int Id { get; set; }
-        public string Cognome { get; set; }
-
-        public string Professione { get; set; }
+        public string Nome { get; set; }
 
         public DateTime DataNascita { get; set; }
 
-        public string Reparto { get; set; }
-        public double Stipendio { get; set; }
+        public string Provincia { get; set; }
 
-        public int Superiore { get; set; }
+        public char Sesso { get; set; }
+
     }
 }

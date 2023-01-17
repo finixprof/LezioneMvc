@@ -2,9 +2,9 @@
 
 namespace WebApplication1.Models
 {
-    public class DettaglioPazienteViewModel
+    public class DettaglioPersonaleViewModel
     {
         public string Testo { get; set; }
-        public Paziente Item { get; set; }
+        public Personale Item { get; set; }
     }
 }
