@@ -1,8 +1,9 @@
-﻿@{
+﻿@model WebApplication1.Models.BaseViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Applicazione gestione Ospedale</h1>
-    <p>Questa applicazione serve per gestire le visite di un Ospedale.</p>
+    <p>@Model.Testo</p>
 </div>

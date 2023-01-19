@@ -1,0 +1,30 @@
+﻿@model WebApplication1.Models.VisiteViewModel
+@{
+    ViewData["Title"] = "Visite";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>@Model.Testo</p>
+
+@if (Model.ListaVisite.Count > 0)
+{
+    <div class="row">
+        <div class="col-md-2">
+            Data Visita
+        </div>
+        <div class="col-md-2">
+            Paziente
+        </div>
+    </div>
+    @foreach (var item in Model.ListaVisite)
+    {
+        <div class="row">
+            <div class="col-md-2">
+                <a asp-controller="Home" asp-action="DettaglioVisita" asp-route-id="@item.Id">@item.DataVisita.ToShortDateString()</a>
+            </div>
+            <div class="col-md-2">
+                <a asp-controller="Home" asp-action="DettaglioPaziente" asp-route-id="@item.IdPaziente"><img src="~/imgs/patient.jpg" width="40" /></a>
+            </div>
+        </div>
+    }
+}

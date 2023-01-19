@@ -96,5 +96,48 @@ namespace WebApplication1.Helpers
                 return null;
             }
         }
+
+        public static List<Visita> GetAllVisite()
+        {
+            try
+            {
+                // Connect to the database
+                using (var connection = new MySqlConnection(ConnectionString))
+                {
+                    // Create a query that retrieves all visita"    
+                    var sql = "SELECT * " +
+                        "FROM visita";
+                    // Use the Query method to execute the query and return a list of objects
+                    var listVisite = connection.Query<Visita>(sql).ToList();
+                    return listVisite ;
+                }
+            }
+            catch (Exception ex)
+            {
+                // dovrei loggare un messaggio: problema di accesso al database
+                return null;
+            }
+        }
+
+        public static Visita GetVisitaById(int id)
+        {
+            try
+            {
+                using(var connection = new MySqlConnection(ConnectionString))
+                {
+                    var sql = "SELECT * " +
+                        "FROM visita " +
+                        "WHERE id = @id";
+                    var visita = connection.Query<Visita>(sql, new {id = id}).FirstOrDefault();
+                    return visita;
+                }
+
+
+            }catch(Exception ex)
+            {
+                return null;
+            }
+
+        }
     }
 }

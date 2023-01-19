@@ -2,9 +2,8 @@
 
 namespace WebApplication1.Models
 {
-    public class PazientiViewModel
+    public class PazientiViewModel: BaseViewModel
     {
-        public string Testo { get; set; }
         public List<Paziente> ListaPazienti { get; set; }  
     }
 }

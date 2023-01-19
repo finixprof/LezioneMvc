@@ -1,8 +1,8 @@
 ﻿namespace WebApplication1.Models.Entities
 {
-    public class Personale
+    public class Personale : EntityBase
     {
-        public int Id { get; set; }
+
         public string Cognome { get; set; }
 
         public string Professione { get; set; }

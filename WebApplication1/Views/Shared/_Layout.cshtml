@@ -19,19 +19,26 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        <li class="nav-item @(Model.Pagina==0?"active":string.Empty)">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item @(Model.Pagina==1?"active":string.Empty)">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Personale">Personale</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item @(Model.Pagina==2?"active":string.Empty)">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Pazienti">Pazienti</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item @(Model.Pagina==3?"active":string.Empty)">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Visite">Visite</a>
+                        </li>
+                        <li class="nav-item @(Model.Pagina==100?"active":string.Empty)">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+
                     </ul>
+                    <div class="form-inline my-2 my-lg-0">
+                        <a class="btn btn-outline-success my-2 my-sm-0" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                    </div>
                 </div>
             </div>
         </nav>

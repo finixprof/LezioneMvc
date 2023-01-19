@@ -1,0 +1,53 @@
+﻿@model WebApplication1.Models.DettaglioVisitaViewModel
+@{
+    ViewData["Title"] = Model.Item.DataVisita.ToShortDateString();
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>@Model.Testo</p>
+
+@if (Model.Item != null)
+{
+    <div class="row">
+        <div class="col-md-2">
+            Data visita
+        </div>
+        <div class="col-md-2">
+            @Model.Item.DataVisita.ToShortDateString()
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            Altezza
+        </div>
+        <div class="col-md-2">
+            @Model.Item.Altezza
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            Peso
+        </div>
+        <div class="col-md-2">
+            @Model.Item.Peso
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            Pressione
+        </div>
+        <div class="col-md-2">
+            Min @Model.Item.PressioneMin Max @Model.Item.PressioneMax
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            Paziente
+        </div>
+        <div class="col-md-2">
+            <a asp-controller="Home" asp-action="DettaglioPaziente" asp-route-id="@Model.Item.IdPaziente"><img src="~/imgs/patient.jpg" width="40" /></a>
+        </div>
+    </div>
+
+
+}

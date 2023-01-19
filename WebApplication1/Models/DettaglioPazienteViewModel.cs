@@ -2,9 +2,8 @@
 
 namespace WebApplication1.Models
 {
-    public class DettaglioPersonaleViewModel
+    public class DettaglioPersonaleViewModel : BaseViewModel
     {
-        public string Testo { get; set; }
         public Personale Item { get; set; }
     }
 }
