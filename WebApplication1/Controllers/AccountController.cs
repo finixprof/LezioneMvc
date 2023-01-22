@@ -8,7 +8,9 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            var model = new LoginViewModel();
+            model.Pagina = -1;
+            return View(model);
         }
 
         [HttpPost]

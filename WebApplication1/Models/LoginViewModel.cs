@@ -2,7 +2,7 @@
 
 namespace WebApplication1.Models
 {
-    public class LoginViewModel
+    public class LoginViewModel:BaseViewModel
     {
         [Required(ErrorMessage = "Username required!")]
         [Display(Name = "Username/Email")]
