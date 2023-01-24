@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Gen 10, 2023 alle 12:47
+-- Creato il: Gen 24, 2023 alle 12:26
 -- Versione del server: 10.4.24-MariaDB
 -- Versione PHP: 8.1.6
 
@@ -18,8 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ospedale5c`
+-- Database: `ospedale5d`
 --
+CREATE DATABASE IF NOT EXISTS `ospedale5d` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `ospedale5d`;
 
 -- --------------------------------------------------------
 
@@ -110,6 +112,21 @@ INSERT INTO `personale` (`ID`, `Cognome`, `DataNascita`, `Professione`, `Reparto
 -- --------------------------------------------------------
 
 --
+-- Struttura della tabella `utente`
+--
+
+CREATE TABLE `utente` (
+  `id` int(11) NOT NULL,
+  `datacreazione` datetime NOT NULL DEFAULT current_timestamp(),
+  `dataultimamodifica` datetime DEFAULT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Struttura della tabella `visita`
 --
 
@@ -156,6 +173,12 @@ ALTER TABLE `personale`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indici per le tabelle `utente`
+--
+ALTER TABLE `utente`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indici per le tabelle `visita`
 --
 ALTER TABLE `visita`
@@ -183,6 +206,12 @@ ALTER TABLE `paziente`
 --
 ALTER TABLE `personale`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT per la tabella `utente`
+--
+ALTER TABLE `utente`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT per la tabella `visita`

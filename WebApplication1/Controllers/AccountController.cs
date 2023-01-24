@@ -23,7 +23,8 @@ namespace WebApplication1.Controllers
             {
                 if (DatabaseHelper.Login(dto.Username, dto.Password))
                 {
-                    //ok devo loggarmi
+                    //ok devo loggarmi -> uso la session al momento, poi passeerò all'identity di .NET
+                    HttpContext.Session.SetString("UtenteLoggato", dto.Username);
 
                     //redirect ad area riservata
                     return RedirectToAction("Index", "AreaRiservata");
@@ -41,6 +42,15 @@ namespace WebApplication1.Controllers
             var errore = "Compilare correttamente Username e Password";
             ViewData["MsgKo"] = errore;
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            //svuotiamo la sessione, potremmo anche 
+            //HttpContext.Session.SetString("UtenteLoggato", null);            
+            HttpContext.Session.Clear();
+            return RedirectToAction("index", "home");
         }
     }
 }

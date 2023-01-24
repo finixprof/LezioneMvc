@@ -37,7 +37,16 @@
 
                     </ul>
                     <div class="form-inline my-2 my-lg-0">
-                        <a class="btn btn-outline-dark my-2 my-sm-0 @(Model!=null && Model.Pagina==-1?"active":string.Empty)" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                        @if (ViewData["UtenteLoggato"] != null)
+                        {
+                            <span>@ViewData["UtenteLoggato"] </span>
+                            <a class="btn btn-outline-dark my-2 my-sm-0 @(Model!=null && Model.Pagina==-1?"active":string.Empty)" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+
+                        }
+                        else
+                        {
+                            <a class="btn btn-outline-dark my-2 my-sm-0 @(Model!=null && Model.Pagina==-1?"active":string.Empty)" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                        }
                     </div>
                 </div>
             </div>

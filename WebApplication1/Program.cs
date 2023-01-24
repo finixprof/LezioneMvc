@@ -11,6 +11,14 @@ namespace WebApplication1
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddSession(options =>
+            {
+                //options.IdleTimeout = TimeSpan.FromSeconds(10); //tempo di durata della sessione
+                //options.Cookie.HttpOnly = true;
+                //options.Cookie.IsEssential = true;
+            });
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -27,6 +35,8 @@ namespace WebApplication1
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
