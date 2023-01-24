@@ -141,13 +141,30 @@ namespace WebApplication1.Helpers
         }
 
 
-        public static bool Login (string username, string password)
+        public static Utente Login (string username, string password)
         {
             //il codice seguente è fake, dovrà essere sostituito con l'accesso al db e query sql.
             //if (username == "finix" && password == "1234")
             //    return true;
             //return false;
-            return username == "finix" && password == "1234";
+            //return username == "finix" && password == "1234";
+            try
+            {
+                using (var connection = new MySqlConnection(ConnectionString))
+                {
+                    var sql = "SELECT * " +
+                        "FROM utente " +
+                        "WHERE username = @username and password = @password";
+                    var utente = connection.Query<Utente>(sql, new {  username, password }).FirstOrDefault();
+                    return utente;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

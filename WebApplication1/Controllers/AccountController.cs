@@ -21,10 +21,11 @@ namespace WebApplication1.Controllers
             model.Pagina = -1;
             if (ModelState.IsValid) //verifica che il model sia valido, seguendo le indicazioni delle dataannotation
             {
-                if (DatabaseHelper.Login(dto.Username, dto.Password))
+                var utente = DatabaseHelper.Login(dto.Username, dto.Password);
+                if (utente != null)
                 {
                     //ok devo loggarmi -> uso la session al momento, poi passeerò all'identity di .NET
-                    HttpContext.Session.SetString("UtenteLoggato", dto.Username);
+                    HttpContext.Session.SetString("UtenteLoggato", utente.Email);
 
                     //redirect ad area riservata
                     return RedirectToAction("Index", "AreaRiservata");
