@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Helpers;
 using WebApplication1.Models;
+using WebApplication1.Helpers.Extensions;
 
 namespace WebApplication1.Controllers
 {
@@ -27,8 +28,8 @@ namespace WebApplication1.Controllers
                 if (utente != null)
                 {
                     //ok devo loggarmi -> uso la session al momento, poi passeerò all'identity di .NET
-                    HttpContext.Session.SetString("UtenteLoggato", utente.Email);
-
+                    //HttpContext.Session.SetString("UtenteLoggato", utente.Email);
+                    HttpContext.Session.SetObject("UtenteLoggato", utente);
                     //redirect ad area riservata
                     return RedirectToAction("Index", "AreaRiservata");
                 }

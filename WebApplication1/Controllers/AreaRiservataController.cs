@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Helpers.Extensions;
+using WebApplication1.Models.Entities;
 
 namespace WebApplication1.Controllers
 {
@@ -6,7 +8,7 @@ namespace WebApplication1.Controllers
     {
         public IActionResult Index()
         {
-            var utenteLoggato = HttpContext.Session.GetString("UtenteLoggato");
+            var utenteLoggato = HttpContext.Session.GetObject<Utente>("UtenteLoggato");
             if (utenteLoggato== null)
                 return RedirectToAction("Login", "Account");
             ViewData["UtenteLoggato"] = utenteLoggato;

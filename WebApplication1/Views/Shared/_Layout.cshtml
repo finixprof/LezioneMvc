@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using WebApplication1.Models.Entities;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -39,7 +40,7 @@
                     <div class="form-inline my-2 my-lg-0">
                         @if (ViewData["UtenteLoggato"] != null)
                         {
-                            <span>@ViewData["UtenteLoggato"] </span>
+                            <span>@(((Utente)ViewData["UtenteLoggato"]).Email) </span>
                             <a class="btn btn-outline-dark my-2 my-sm-0 @(Model!=null && Model.Pagina==-1?"active":string.Empty)" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
 
                         }

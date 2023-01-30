@@ -1,4 +1,5 @@
-﻿@*
+﻿@using WebApplication1.Models.Entities;
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -6,3 +7,5 @@
 
 
 <h1>Area Riservata</h1>
+
+<p>Ciao @(((Utente)ViewData["UtenteLoggato"]).Username)</p>
