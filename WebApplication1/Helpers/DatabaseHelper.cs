@@ -166,5 +166,26 @@ namespace WebApplication1.Helpers
                 return null;
             }
         }
+
+        public  static Utente GetUtenteByUsername(string username)
+        {
+            try
+            {
+                using (var connection = new MySqlConnection(ConnectionString))
+                {
+                    var sql = "SELECT * " +
+                        "FROM utente " +
+                        "WHERE username = @username ";
+                    var utente = connection.Query<Utente>(sql, new { username }).FirstOrDefault();
+                    return utente;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

@@ -21,7 +21,9 @@ namespace WebApplication1.Controllers
             model.Pagina = -1;
             if (ModelState.IsValid) //verifica che il model sia valido, seguendo le indicazioni delle dataannotation
             {
-                var utente = DatabaseHelper.Login(dto.Username, dto.Password);
+                var utente = DatabaseHelper.GetUtenteByUsername(dto.Username);
+                var password = CryptoHelper.HashSHA256($"{utente.Id}*{dto.Password}+{utente.DataCreazione.Value.ToShortDateString()}-{utente.DataCreazione.Value.ToShortTimeString()}");
+                utente = DatabaseHelper.Login(dto.Username, password);
                 if (utente != null)
                 {
                     //ok devo loggarmi -> uso la session al momento, poi passeerò all'identity di .NET
