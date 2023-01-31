@@ -40,7 +40,7 @@ namespace WebApplication1
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            app.UseAuthentication(); //serve per gestire l'authorize
             app.UseAuthorization();
 
             app.UseSession();
