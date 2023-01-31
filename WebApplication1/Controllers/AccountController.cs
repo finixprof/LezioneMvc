@@ -2,6 +2,9 @@
 using WebApplication1.Helpers;
 using WebApplication1.Models;
 using WebApplication1.Helpers.Extensions;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace WebApplication1.Controllers
 {
@@ -16,7 +19,7 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginDto dto)
+        public async Task<IActionResult> LoginAsync(LoginDto dto)
         {
             var model = new LoginViewModel();
             model.Pagina = -1;
@@ -27,7 +30,23 @@ namespace WebApplication1.Controllers
                 utente = DatabaseHelper.Login(dto.Username, password);
                 if (utente != null)
                 {
-                    //ok devo loggarmi -> uso la session al momento, poi passeerò all'identity di .NET
+                    //ok devo loggarmi -> uso la session al momento, poi passerò all'identity di .NET
+
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, utente.Email),
+                        ///new Claim("Finix", {Your Value})
+                    };
+
+                    var claimsIdentity = new ClaimsIdentity(
+                        claims,
+                        CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity));
+
+                    //mettiamo l'utente in sessione
                     //HttpContext.Session.SetString("UtenteLoggato", utente.Email);
                     HttpContext.Session.SetObject("UtenteLoggato", utente);
                     //redirect ad area riservata

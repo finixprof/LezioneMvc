@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using WebApplication1.Helpers;
 
 namespace WebApplication1
@@ -17,6 +18,11 @@ namespace WebApplication1
                 //options.Cookie.HttpOnly = true;
                 //options.Cookie.IsEssential = true;
             });
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Account/Login"; //aggiungere url login per not authorized
+                });
 
 
             var app = builder.Build();
@@ -34,6 +40,7 @@ namespace WebApplication1
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSession();
