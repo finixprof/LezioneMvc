@@ -18,7 +18,7 @@ namespace WebApplication1.Controllers
         public IActionResult Index()
         {
             var model = new BaseViewModel();
-            model.Pagina= 0;
+            model.Pagina= Costanti.Pagine.Home;
             model.Testo = "Questa applicazione serve per gestire le visite di un Ospedale.";
             return View(model);
         }
@@ -26,7 +26,7 @@ namespace WebApplication1.Controllers
         public IActionResult Privacy()
         {
             var model = new BaseViewModel();
-            model.Pagina = 100;
+            model.Pagina = Costanti.Pagine.Privacy;
             model.Testo = "Use this page to detail your site's privacy policy.";
             return View(model);
         }
@@ -37,7 +37,7 @@ namespace WebApplication1.Controllers
             var listaPersonale = DatabaseHelper.GetAllPersonale();
             //creazione del modello da passare alla view
             var model = new PersonaleViewModel();
-            model.Pagina = 1;
+            model.Pagina = Costanti.Pagine.Personale;
             model.ListaPersonale = listaPersonale;
             model.Testo = "Lista del personale.";
             return View(model);
@@ -49,7 +49,7 @@ namespace WebApplication1.Controllers
             var personale = DatabaseHelper.GetPersonaleById(id);
             //creazione del modello da passare alla view
             var model = new DettaglioPersonaleViewModel();
-            model.Pagina = 1;
+            model.Pagina = Costanti.Pagine.Personale;
 
             model.Item = personale;
             model.Testo = "Dati del dipendente personale.";
@@ -63,7 +63,7 @@ namespace WebApplication1.Controllers
             var listaPazienti = DatabaseHelper.GetAllPazienti();
             //creazione del modello da passare alla view
             var model = new PazientiViewModel();
-            model.Pagina = 2;
+            model.Pagina = Costanti.Pagine.Pazienti;
 
             model.ListaPazienti = listaPazienti;
             model.Testo = "Lista del pazienti.";
@@ -75,7 +75,7 @@ namespace WebApplication1.Controllers
             //Recupero dei dati da database con filtro id
             var paziente = DatabaseHelper.GetPazienteById(id);
             var model = new DettaglioPazienteViewModel();
-            model.Pagina = 2;
+            model.Pagina = Costanti.Pagine.Pazienti;
 
             if (paziente == null)
             {
@@ -93,7 +93,7 @@ namespace WebApplication1.Controllers
             //Recupero dei dati da database
             var listaVisite = DatabaseHelper.GetAllVisite();
             var model = new VisiteViewModel();
-            model.Pagina = 3;
+            model.Pagina = Costanti.Pagine.Visite;
 
             if (listaVisite == null || listaVisite.Count == 0)
             {
@@ -112,7 +112,7 @@ namespace WebApplication1.Controllers
             //Recupero dei dati da database con filtro id
             var visita = DatabaseHelper.GetVisitaById(id);
             var model = new DettaglioVisitaViewModel();
-            model.Pagina = 3;
+            model.Pagina = Costanti.Pagine.Visite;
 
             if (visita == null)
             {

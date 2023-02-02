@@ -75,5 +75,13 @@ namespace WebApplication1.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("index", "home");
         }
+
+        [HttpGet]
+        public IActionResult Registrazione()
+        {
+            var model = new RegistrazioneViewModel();
+            model.Pagina = Costanti.Pagine.Registrazione;
+            return View(model);
+        }
     }
 }
