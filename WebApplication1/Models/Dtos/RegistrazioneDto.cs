@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebApplication1.Models
+namespace WebApplication1.Models.Dtos
 {
-    public class RegistrazioneViewModel : BaseViewModel
+    public class RegistrazioneDto 
     {
         [Required(ErrorMessage = "Campo obbligatorio")]
         public string Username { get; set; }

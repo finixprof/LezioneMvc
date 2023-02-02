@@ -5,6 +5,7 @@ using WebApplication1.Helpers.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using WebApplication1.Models.Dtos;
 
 namespace WebApplication1.Controllers
 {
@@ -82,6 +83,38 @@ namespace WebApplication1.Controllers
             var model = new RegistrazioneViewModel();
             model.Pagina = Costanti.Pagine.Registrazione;
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Registrazione(RegistrazioneDto dto)
+        {
+            var model = new RegistrazioneViewModel();
+            model.Pagina = Costanti.Pagine.Registrazione;
+            if (ModelState.IsValid)
+            {
+                //proseguo con la registrazione
+
+                //1) controllare che username o email non siano stati già utilizzati (SELECT)
+                // in caso di esistenza mostrare l'errore
+                ViewData["MsgKo"] = "Username o email già utilizzati";
+                return View(model);
+
+
+                //2)Inserisco i dati su database (INSERT)
+
+                //3)Cifro la password e aggiorno il database (UPDATE)
+
+                //4)Invio mail di conferma
+
+                //5)Messaggio di registrazione completata e di andare a confermare la mail
+                ViewData["MsgOk"] = "Registrazione completata, confermare l'indirizzo email";
+                return View(model);
+            }
+            //mando un errore alla pagina
+            var errore = "Compilare correttamente tutti i campi";
+            ViewData["MsgKo"] = errore;
+            return View(model);
+
         }
     }
 }
