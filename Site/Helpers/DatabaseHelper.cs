@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using MySql.Data.MySqlClient;
+using WebApplication1.Models.Dtos;
 using WebApplication1.Models.Entities;
 
 namespace WebApplication1.Helpers
@@ -41,7 +42,7 @@ namespace WebApplication1.Helpers
                         "FROM personale " +
                         "WHERE id=@id";
                     // Use the Query method to execute the query and return a list of objects
-                    var personale = connection.Query<Personale>(sql, new { id = id}).FirstOrDefault();
+                    var personale = connection.Query<Personale>(sql, new { id = id }).FirstOrDefault();
                     return personale;
                 }
             }
@@ -74,7 +75,7 @@ namespace WebApplication1.Helpers
             }
         }
 
-        public  static Paziente GetPazienteById(int id)
+        public static Paziente GetPazienteById(int id)
         {
             try
             {
@@ -109,7 +110,7 @@ namespace WebApplication1.Helpers
                         "FROM visita";
                     // Use the Query method to execute the query and return a list of objects
                     var listVisite = connection.Query<Visita>(sql).ToList();
-                    return listVisite ;
+                    return listVisite;
                 }
             }
             catch (Exception ex)
@@ -123,17 +124,18 @@ namespace WebApplication1.Helpers
         {
             try
             {
-                using(var connection = new MySqlConnection(ConnectionString))
+                using (var connection = new MySqlConnection(ConnectionString))
                 {
                     var sql = "SELECT * " +
                         "FROM visita " +
                         "WHERE id = @id";
-                    var visita = connection.Query<Visita>(sql, new {id = id}).FirstOrDefault();
+                    var visita = connection.Query<Visita>(sql, new { id = id }).FirstOrDefault();
                     return visita;
                 }
 
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return null;
             }
@@ -141,7 +143,7 @@ namespace WebApplication1.Helpers
         }
 
 
-        public static Utente Login (string username, string password)
+        public static Utente Login(string username, string password)
         {
             //il codice seguente è fake, dovrà essere sostituito con l'accesso al db e query sql.
             //if (username == "finix" && password == "1234")
@@ -155,7 +157,7 @@ namespace WebApplication1.Helpers
                     var sql = "SELECT * " +
                         "FROM utente " +
                         "WHERE username = @username and password = @password";
-                    var utente = connection.Query<Utente>(sql, new {  username, password }).FirstOrDefault();
+                    var utente = connection.Query<Utente>(sql, new { username, password }).FirstOrDefault();
                     return utente;
                 }
 
@@ -167,7 +169,7 @@ namespace WebApplication1.Helpers
             }
         }
 
-        public  static Utente GetUtenteByUsername(string username)
+        public static Utente GetUtenteByUsername(string username)
         {
             try
             {
@@ -181,6 +183,48 @@ namespace WebApplication1.Helpers
                 }
 
 
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public static bool? ExistUtenteByUsernameOrEmail(string username, string email)
+        {
+            try
+            {
+                using (var connection = new MySqlConnection(ConnectionString))
+                {
+                    var sql = "SELECT * " +
+                        "FROM utente " +
+                        "WHERE username = @username or email = @email";
+                    return connection.Query<Utente>(sql, new { username, email }).FirstOrDefault() != null;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public static Utente InsertUtente(RegistrazioneDto dto)
+        {
+            try
+            {
+                using (var connection = new MySqlConnection(ConnectionString))
+                {
+                    var sql = "INSERT INTO utente (username, email, password) " +
+                        "VALUES (@username, @email, @password); " + 
+                        "SELECT * " + 
+                        "FROM utente " + 
+                        "WHERE username= @username " + 
+                        "AND email=@email" + 
+                        "AND password = @password";
+
+                    var utente = connection.Query<Utente>(sql, new { dto.Username, dto.Email, dto.Password }).FirstOrDefault();
+                    return utente;
+                }
             }
             catch (Exception ex)
             {

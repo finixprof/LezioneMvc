@@ -2,6 +2,10 @@
 {
     public static class Costanti
     {
+        public static class Errori
+        {
+            public const string ServizioNonDisponibile = "Servizio momentaneamente non disponibile, riprovare più tardi";
+        }
 
         public static class Pagine
         {

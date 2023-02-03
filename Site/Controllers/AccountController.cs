@@ -96,11 +96,20 @@ namespace WebApplication1.Controllers
 
                 //1) controllare che username o email non siano stati già utilizzati (SELECT)
                 // in caso di esistenza mostrare l'errore
-                ViewData["MsgKo"] = "Username o email già utilizzati";
-                return View(model);
-
+                var exists = DatabaseHelper.ExistUtenteByUsernameOrEmail(dto.Username, dto.Email);
+                if (exists == null)
+                {
+                    ViewData["MsgKo"] = Costanti.Errori.ServizioNonDisponibile;
+                    return View(model);
+                }
+                else if (exists.Value)
+                {
+                    ViewData["MsgKo"] = "Username o email già utilizzati";
+                    return View(model);
+                }
 
                 //2)Inserisco i dati su database (INSERT)
+                var utente = DatabaseHelper.InsertUtente(dto);
 
                 //3)Cifro la password e aggiorno il database (UPDATE)
 
