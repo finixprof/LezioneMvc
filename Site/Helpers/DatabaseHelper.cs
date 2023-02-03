@@ -219,7 +219,7 @@ namespace WebApplication1.Helpers
                         "SELECT * " + 
                         "FROM utente " + 
                         "WHERE username= @username " + 
-                        "AND email=@email" + 
+                        "AND email=@email " + 
                         "AND password = @password";
 
                     var utente = connection.Query<Utente>(sql, new { dto.Username, dto.Email, dto.Password }).FirstOrDefault();
