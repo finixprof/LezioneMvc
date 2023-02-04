@@ -1,9 +1,9 @@
 ﻿using Dapper;
 using MySql.Data.MySqlClient;
-using WebApplication1.Models.Dtos;
-using WebApplication1.Models.Entities;
+using Site.Models.Dtos;
+using Site.Models.Entities;
 
-namespace WebApplication1.Helpers
+namespace Site.Helpers
 {
     public static class DatabaseHelper
     {
@@ -60,7 +60,7 @@ namespace WebApplication1.Helpers
                 // Connect to the database
                 using (var connection = new MySqlConnection(ConnectionString))
                 {
-                    // Create a query that retrieves all personale"    
+                    // Create a query that retrieves all pazienti"    
                     var sql = "SELECT * " +
                         "FROM paziente";
                     // Use the Query method to execute the query and return a list of objects
@@ -82,7 +82,7 @@ namespace WebApplication1.Helpers
                 // Connect to the database
                 using (var connection = new MySqlConnection(ConnectionString))
                 {
-                    // Create a query that retrieves all personale"    
+                    // Create a query that retrieves one paziente by id"    
                     var sql = "SELECT * " +
                         "FROM paziente " +
                         "WHERE id=@id";

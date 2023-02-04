@@ -1,6 +1,6 @@
-﻿using WebApplication1.Models.Entities;
+﻿using Site.Models.Entities;
 
-namespace WebApplication1.Models
+namespace Site.Models
 {
     public class VisiteViewModel:BaseViewModel
     {

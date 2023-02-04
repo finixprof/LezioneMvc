@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using WebApplication1.Helpers;
+using Site.Helpers;
 
-namespace WebApplication1
+namespace Site
 {
     public class Program
     {

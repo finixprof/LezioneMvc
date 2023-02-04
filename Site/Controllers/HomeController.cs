@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using WebApplication1.Helpers;
-using WebApplication1.Models;
-using WebApplication1.Models.Entities;
+using Site.Helpers;
+using Site.Models;
+using Site.Models.Entities;
 
-namespace WebApplication1.Controllers
+namespace Site.Controllers
 {
     public class HomeController : Controller
     {

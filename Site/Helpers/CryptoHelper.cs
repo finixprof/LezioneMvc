@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace WebApplication1.Helpers
+namespace Site.Helpers
 {
     public static class CryptoHelper
     {

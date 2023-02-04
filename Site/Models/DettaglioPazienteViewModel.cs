@@ -1,9 +1,9 @@
-﻿using WebApplication1.Models.Entities;
+﻿using Site.Models.Entities;
 
-namespace WebApplication1.Models
+namespace Site.Models
 {
-    public class DettaglioPersonaleViewModel : BaseViewModel
+    public class DettaglioPazienteViewModel: BaseViewModel
     {
-        public Personale Item { get; set; }
+        public Paziente Item { get; set; }
     }
 }

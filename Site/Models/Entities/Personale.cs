@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Models.Entities
+﻿namespace Site.Models.Entities
 {
     public class Paziente : EntityBase
     {

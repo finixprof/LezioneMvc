@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Helpers.Extensions;
-using WebApplication1.Models.Entities;
+using Site.Helpers.Extensions;
+using Site.Models.Entities;
 
-namespace WebApplication1.Controllers
+namespace Site.Controllers
 {
     [Authorize]
     public class AreaRiservataController : Controller

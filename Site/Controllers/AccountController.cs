@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Helpers;
-using WebApplication1.Models;
-using WebApplication1.Helpers.Extensions;
+using Site.Helpers;
+using Site.Models;
+using Site.Helpers.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
-using WebApplication1.Models.Dtos;
+using Site.Models.Dtos;
 
-namespace WebApplication1.Controllers
+namespace Site.Controllers
 {
     public class AccountController : Controller
     {
@@ -15,7 +15,7 @@ namespace WebApplication1.Controllers
         public IActionResult Login()
         {
             var model = new LoginViewModel();
-            model.Pagina = -1;
+            model.Pagina = Costanti.Pagine.Login;
             return View(model);
         }
 
@@ -23,7 +23,7 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> LoginAsync(LoginDto dto)
         {
             var model = new LoginViewModel();
-            model.Pagina = -1;
+            model.Pagina = Costanti.Pagine.Login;
             if (ModelState.IsValid) //verifica che il model sia valido, seguendo le indicazioni delle dataannotation
             {
                 var utente = DatabaseHelper.GetUtenteByUsername(dto.Username);

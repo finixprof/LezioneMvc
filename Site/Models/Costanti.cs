@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.Models
+﻿namespace Site.Models
 {
     public static class Costanti
     {
@@ -16,9 +16,6 @@
             public const int Pazienti = 2;
             public const int Visite = 3;
             public const int Privacy = 100;
-
-
-
         }
     }
 }
