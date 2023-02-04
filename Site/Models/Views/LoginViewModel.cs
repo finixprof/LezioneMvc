@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Site.Models
+namespace Site.Models.Views
 {
-    public class LoginViewModel: BaseViewModel
+    public class LoginViewModel : BaseViewModel
     {
         [Required(ErrorMessage = "Username required!")]
         [Display(Name = "Username/Email")]
@@ -14,6 +14,6 @@ namespace Site.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        
+
     }
 }

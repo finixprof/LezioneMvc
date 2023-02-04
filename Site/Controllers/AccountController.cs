@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Site.Helpers;
-using Site.Models;
+using Site.Models.Views;
 using Site.Helpers.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using Site.Models.Dtos;
+using Site.Models;
 
 namespace Site.Controllers
 {

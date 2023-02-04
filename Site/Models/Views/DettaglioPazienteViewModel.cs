@@ -1,8 +1,8 @@
 ﻿using Site.Models.Entities;
 
-namespace Site.Models
+namespace Site.Models.Views
 {
-    public class DettaglioPazienteViewModel: BaseViewModel
+    public class DettaglioPazienteViewModel : BaseViewModel
     {
         public Paziente Item { get; set; }
     }

@@ -1,6 +1,6 @@
 ﻿using Site.Models.Entities;
 
-namespace Site.Models
+namespace Site.Models.Views
 {
     public class DettaglioVisitaViewModel : BaseViewModel
     {

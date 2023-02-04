@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Site.Helpers;
 using Site.Models;
+using Site.Models.Views;
 using Site.Models.Entities;
 
 namespace Site.Controllers
