@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using Site.Models.Dtos;
 using Site.Models;
+using Site.Models.Entities;
 
 namespace Site.Controllers
 {
@@ -28,53 +29,50 @@ namespace Site.Controllers
             if (ModelState.IsValid) //verifica che il model sia valido, seguendo le indicazioni delle dataannotation
             {
                 var utente = DatabaseHelper.GetUtenteByUsername(dto.Username);
-                var password = CryptoHelper.HashSHA256($"{utente.Id}*{dto.Password}+{utente.DataCreazione.Value.ToShortDateString()}-{utente.DataCreazione.Value.ToShortTimeString()}");
-                utente = DatabaseHelper.Login(dto.Username, password);
                 if (utente != null)
                 {
-                    //ok devo loggarmi -> uso la session al momento, poi passerò all'identity di .NET
-
-                    var claims = new List<Claim>
+                    var password = CryptoHelper.HashSHA256($"{utente.Id}*{dto.Password}+{utente.DataCreazione.Value.ToShortDateString()}-{utente.DataCreazione.Value.ToShortTimeString()}");
+                    utente = DatabaseHelper.Login(dto.Username, password);
+                    if (utente != null)
                     {
-                        new Claim(ClaimTypes.Name, utente.Email),
-                        ///new Claim("Finix", {Your Value})
-                    };
+                        //ok devo loggarmi -> uso la session al momento, poi passerò all'identity di .NET
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, utente.Email),
+                            ///new Claim("Finix", {Your Value}) //possiamo aggiungere qualsiasi chiave personalizzata e assegnare un valore
+                        };
 
-                    var claimsIdentity = new ClaimsIdentity(
-                        claims,
-                        CookieAuthenticationDefaults.AuthenticationScheme);
+                        var claimsIdentity = new ClaimsIdentity(
+                            claims,
+                            CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    await HttpContext.SignInAsync(
-                        CookieAuthenticationDefaults.AuthenticationScheme,
-                        new ClaimsPrincipal(claimsIdentity));
+                        await HttpContext.SignInAsync(
+                            CookieAuthenticationDefaults.AuthenticationScheme,
+                            new ClaimsPrincipal(claimsIdentity));
 
-                    //mettiamo l'utente in sessione
-                    //HttpContext.Session.SetString("UtenteLoggato", utente.Email);
-                    HttpContext.Session.SetObject("UtenteLoggato", utente);
-                    //redirect ad area riservata
-                    return RedirectToAction("Index", "AreaRiservata");
+                        //mettiamo l'utente in sessione
+                        HttpContext.Session.SetObject("UtenteLoggato", utente);
+                        //redirect ad area riservata
+                        return RedirectToAction("Index", "AreaRiservata");
+                    }
                 }
 
                 // devo mostrare un errore in pagina
                 ViewData["MsgKo"] = "Non esiste un utente con Username e Password indicate";
                 return View(model);
             }
-            //restituire un errore
-
-            //per recupoerare gli errori indiuviduati dal ModelState
-            var errori = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
-
+            //restituire un errore            
+            //var errori = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage); //per recupoerare gli errori indiuviduati dal ModelState
             var errore = "Compilare correttamente Username e Password";
             ViewData["MsgKo"] = errore;
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            //svuotiamo la sessione, potremmo anche 
-            //HttpContext.Session.SetString("UtenteLoggato", null);            
-            HttpContext.Session.Clear();
+            HttpContext.Session.Remove("UtenteLoggato");
+            await HttpContext.SignOutAsync();
             return RedirectToAction("index", "home");
         }
 
