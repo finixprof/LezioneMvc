@@ -95,22 +95,51 @@ namespace Site.Controllers
 
                 //1) controllare che username o email non siano stati già utilizzati (SELECT)
                 // in caso di esistenza mostrare l'errore
-                var exists = DatabaseHelper.ExistUtenteByUsernameOrEmail(dto.Username, dto.Email);
-                if (exists == null)
+                var utente = DatabaseHelper.GetUtenteByEmail(dto.Email);
+                if (utente == null || utente.Username != dto.Username)
                 {
-                    ViewData["MsgKo"] = Costanti.Errori.ServizioNonDisponibile;
-                    return View(model);
+                    var exists = DatabaseHelper.ExistUtenteByUsername(dto.Username);
+                    if (exists == null)
+                    {
+                        ViewData["MsgKo"] = Costanti.Errori.ServizioNonDisponibile;
+                        return View(model);
+                    }
+                    else if (exists.Value)
+                    {
+                        ViewData["MsgKo"] = "Username o email già utilizzati";
+                        return View(model);
+                    }
+
+                    //2)Inserisco i dati su database (INSERT)
+                    if (utente == null)
+                        utente = DatabaseHelper.InsertUtente(dto);
                 }
-                else if (exists.Value)
+                else if (utente.DataUltimaModifica != null)
                 {
+                    // esiste un utente con la mail indicata ed ha completato la registrazione
                     ViewData["MsgKo"] = "Username o email già utilizzati";
                     return View(model);
                 }
+                else if (utente.Username != dto.Username)
+                {
+                    var exists = DatabaseHelper.ExistUtenteByUsername(dto.Username);
+                    if (exists == null)
+                    {
+                        ViewData["MsgKo"] = Costanti.Errori.ServizioNonDisponibile;
+                        return View(model);
+                    }
+                    else if (exists.Value)
+                    {
+                        ViewData["MsgKo"] = "Username o email già utilizzati";
+                        return View(model);
+                    }
+                }
 
-                //2)Inserisco i dati su database (INSERT)
-                var utente = DatabaseHelper.InsertUtente(dto);
 
                 //3)Cifro la password e aggiorno il database (UPDATE)
+                var daCifrare = $"{utente.Id}*{dto.Password}+{utente.DataCreazione.Value.ToShortDateString()}-{utente.DataCreazione.Value.ToShortTimeString()}";
+                utente.Password = CryptoHelper.HashSHA256(daCifrare);
+                DatabaseHelper.UpdateUtente(utente);
 
                 //4)Invio mail di conferma
 

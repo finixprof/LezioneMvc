@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using Site.Models.Dtos;
 using Site.Models.Entities;
+using System.Linq.Expressions;
 
 namespace Site.Helpers
 {
@@ -184,7 +185,7 @@ namespace Site.Helpers
             }
         }
 
-        public static bool? ExistUtenteByUsernameOrEmail(string username, string email)
+        public static bool? ExistUtenteByUsername(string username)
         {
             try
             {
@@ -192,8 +193,10 @@ namespace Site.Helpers
                 {
                     var sql = "SELECT * " +
                         "FROM utente " +
-                        "WHERE username = @username or email = @email";
-                    return connection.Query<Utente>(sql, new { username, email }).FirstOrDefault() != null;
+                        "WHERE username = @username " +
+                        //"OR email = @email " +
+                        "AND dataultimamodifica IS NOT NULL ";
+                    return connection.Query<Utente>(sql, new { username }).FirstOrDefault() != null;
                 }
             }
             catch (Exception ex)
@@ -223,6 +226,29 @@ namespace Site.Helpers
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        internal static Utente GetUtenteByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void UpdateUtente(Utente utente)
+        {
+            try
+            {
+                using (var connection = new MySqlConnection(ConnectionString))
+                {
+                    var sql = "UPDATE utente " +
+                        "SET password = @password " +
+                        "WHERE id = @id";
+                    connection.Query(sql, new { utente.Password, utente.Id });
+                }
+            }   
+            catch(Exception ex)
+            {
+
             }
         }
     }
