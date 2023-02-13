@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using Site.Models.Dtos;
 using Site.Models.Entities;
 using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Site.Helpers
 {
@@ -268,6 +269,30 @@ namespace Site.Helpers
             catch (Exception ex)
             {
 
+            }
+        }
+
+        public static bool UpdateDataUltimaModificaUtente(int id, string email)
+        {
+            try
+            {
+                using (var connection = new MySqlConnection(ConnectionString))
+                {
+                    var sql = "SET @LastUpdateID := 0; " +
+                        "UPDATE utente " +
+                        "SET dataultimamodifica = @dataultimamodifica " +
+                        ",Rno = (SELECT @LastUpdateID:= Rno)" +
+                        "WHERE id = @id " +
+                        "AND email = @email; " +
+                        "SELECT @LastUpdateID AS LastUpdateID";
+
+                    var dataultimamodifica = DateTime.Now;
+                    return connection.Query<int>(sql, new { dataultimamodifica, id, email }).FirstOrDefault() == id;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }

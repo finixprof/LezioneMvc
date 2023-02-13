@@ -169,11 +169,18 @@ namespace Site.Controllers
             //decifrare il token
             var tokenDecifrato = CryptoHelper.Decrypt(token);
 
-            //var email = 
-            //var dataCreazione = 
+            var parti = tokenDecifrato.Split('*', '+');
+            var email = parti[1];
+            var dataCreazione = parti[2]; //data-ora
 
-                //update dataultimamodifica in utente con where ad hoc
-                
+            //update dataultimamodifica in utente con where id email;
+            if (id.ToString() != parti[0] || !DatabaseHelper.UpdateDataUltimaModificaUtente(id, email))
+            {
+                ViewData["MsgKo"] = "Il link di conferma non corrisponde";
+                return View();
+            }
+
+            ViewData["MsgOk"] = "Registrazione completata";
             return View();
         }
     }
