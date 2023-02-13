@@ -152,7 +152,9 @@ namespace Site.Helpers
                 {
                     var sql = "SELECT * " +
                         "FROM utente " +
-                        "WHERE username = @username and password = @password";
+                        "WHERE username = @username " +
+                        "AND password = @password " +
+                        "AND dataUltimaModifica IS NOT NULL";
                     var utente = connection.Query<Utente>(sql, new { username, password }).FirstOrDefault();
                     return utente;
                 }
@@ -172,7 +174,8 @@ namespace Site.Helpers
                 {
                     var sql = "SELECT * " +
                         "FROM utente " +
-                        "WHERE username = @username ";
+                        "WHERE username = @username " +
+                        "AND dataUltimaModifica is NOT NULL";
                     var utente = connection.Query<Utente>(sql, new { username }).FirstOrDefault();
                     return utente;
                 }
@@ -212,11 +215,11 @@ namespace Site.Helpers
                 using (var connection = new MySqlConnection(ConnectionString))
                 {
                     var sql = "INSERT INTO utente (username, email, password) " +
-                        "VALUES (@username, @email, @password); " + 
-                        "SELECT * " + 
-                        "FROM utente " + 
-                        "WHERE username= @username " + 
-                        "AND email=@email " + 
+                        "VALUES (@username, @email, @password); " +
+                        "SELECT * " +
+                        "FROM utente " +
+                        "WHERE username= @username " +
+                        "AND email=@email " +
                         "AND password = @password";
 
                     var utente = connection.Query<Utente>(sql, new { dto.Username, dto.Email, dto.Password }).FirstOrDefault();
@@ -229,9 +232,25 @@ namespace Site.Helpers
             }
         }
 
-        internal static Utente GetUtenteByEmail(string email)
+        public static Utente GetUtenteByEmail(string email)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var connection = new MySqlConnection(ConnectionString))
+                {
+                    var sql = "SELECT * " +
+                        "FROM utente " +
+                        "WHERE email = @email ";
+                    var utente = connection.Query<Utente>(sql, new { email }).FirstOrDefault();
+                    return utente;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public static void UpdateUtente(Utente utente)
@@ -245,8 +264,8 @@ namespace Site.Helpers
                         "WHERE id = @id";
                     connection.Query(sql, new { utente.Password, utente.Id });
                 }
-            }   
-            catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }

@@ -142,6 +142,12 @@ namespace Site.Controllers
                 DatabaseHelper.UpdateUtente(utente);
 
                 //4)Invio mail di conferma
+                //creo il token e il link da mettere nella mail
+                var tokenDaCifrare = $"{utente.Id}*{dto.Email}+{utente.DataCreazione.Value.ToShortDateString()}-{utente.DataCreazione.Value.ToShortTimeString()}";
+                var token = CryptoHelper.Encrypt(tokenDaCifrare);
+                var link = PathHelper.GetUrlToConfirmEmail(HttpContext.Request, utente.Id, token);
+                //invio mail
+
 
                 //5)Messaggio di registrazione completata e di andare a confermare la mail
                 ViewData["MsgOk"] = "Registrazione completata, confermare l'indirizzo email";
@@ -152,6 +158,12 @@ namespace Site.Controllers
             ViewData["MsgKo"] = errore;
             return View(model);
 
+        }
+
+        [HttpGet]
+        public IActionResult ConfermaRegistrazione(int id, string token)
+        {
+            return View();
         }
     }
 }
