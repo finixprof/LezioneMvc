@@ -163,6 +163,8 @@ namespace Site.Controllers
         [HttpGet]
         public IActionResult ConfermaRegistrazione(int id, string token)
         {
+            //link di prova
+            //https://localhost:7057/account/ConfermaRegistrazione/2?token=EUKKj9Lco7oLM0ddBlRurL75RkmFHZ8eC2W7NopFJzLH34CNMnPofuyZa4pEzlbbZgsKJzsSUJv18zZXSQBqa3ibhFDVER8CFwVW8lFDeAg=
             //dal token nel link estraggo l'indirizzo email e data di creazione
             //decifrare il token
             var tokenDecifrato = CryptoHelper.Decrypt(token);
