@@ -163,6 +163,15 @@ namespace Site.Controllers
         [HttpGet]
         public IActionResult ConfermaRegistrazione(int id, string token)
         {
+            //dal token nel link estraggo l'indirizzo email e data di creazione
+            //decifrare il token
+            var tokenDecifrato = CryptoHelper.Decrypt(token);
+
+            //var email = 
+            //var dataCreazione = 
+
+                //update dataultimamodifica in utente con where ad hoc
+                
             return View();
         }
     }
