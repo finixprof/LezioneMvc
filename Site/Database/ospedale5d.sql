@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Gen 24, 2023 alle 12:26
+-- Creato il: Feb 14, 2023 alle 12:04
 -- Versione del server: 10.4.24-MariaDB
 -- Versione PHP: 8.1.6
 
@@ -121,8 +121,17 @@ CREATE TABLE `utente` (
   `dataultimamodifica` datetime DEFAULT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL
+  `email` varchar(255) NOT NULL,
+  `isMailConfermata` bit(1) NOT NULL DEFAULT b'0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `utente`
+--
+
+INSERT INTO `utente` (`id`, `datacreazione`, `dataultimamodifica`, `username`, `password`, `email`, `isMailConfermata`) VALUES
+(1, '2023-01-24 12:29:05', '2023-02-02 11:42:17', 'finix', '8df3dc034e6388e8ba6915073dbea6440ef7c12c30860c57ca7f2fe444d7502c', 'salvo.finistrella@iispascal.it', b'0'),
+(2, '2023-02-13 11:34:10', '2023-02-14 11:56:47', 'finix77', '65fa5e6abf83842d6eccf9bfb286d58767803e59cdbbda85a268855b29673e20', 'finix77@hotmail.com', b'1');
 
 -- --------------------------------------------------------
 
@@ -211,7 +220,7 @@ ALTER TABLE `personale`
 -- AUTO_INCREMENT per la tabella `utente`
 --
 ALTER TABLE `utente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT per la tabella `visita`
