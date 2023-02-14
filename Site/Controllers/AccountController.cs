@@ -112,7 +112,14 @@ namespace Site.Controllers
 
                     //2)Inserisco i dati su database (INSERT)
                     if (utente == null)
-                        utente = DatabaseHelper.InsertUtente(dto);
+                    {
+                        utente = new Utente
+                        {
+                            Username = dto.Username,
+                            Email = dto.Email
+                        };
+                        utente = DatabaseHelper.SalvaUtente(utente);
+                    }
                 }
                 else if (utente.DataUltimaModifica != null)
                 {
@@ -139,7 +146,12 @@ namespace Site.Controllers
                 //3)Cifro la password e aggiorno il database (UPDATE)
                 var daCifrare = $"{utente.Id}*{dto.Password}+{utente.DataCreazione.Value.ToShortDateString()}-{utente.DataCreazione.Value.ToShortTimeString()}";
                 utente.Password = CryptoHelper.HashSHA256(daCifrare);
-                DatabaseHelper.UpdateUtente(utente);
+                utente = DatabaseHelper.SalvaUtente(utente);
+                if (utente.Password == null)
+                {
+                    ViewData["MsgKo"] = Costanti.Errori.ServizioNonDisponibile;
+                    return View(model);
+                }
 
                 //4)Invio mail di conferma
                 //creo il token e il link da mettere nella mail
@@ -173,14 +185,21 @@ namespace Site.Controllers
             var email = parti[1];
             var dataCreazione = parti[2]; //data-ora
 
+            var utente = DatabaseHelper.GetUtenteByEmail(email);
+            if (id.ToString() != parti[0] || utente == null)
+            {
+                ViewData["MsgKo"] = "Il link di conferma non corrisponde";
+                return View();
+            }
+            utente.IsMailConfermata = true;
             //update dataultimamodifica in utente con where id email;
-            if (id.ToString() != parti[0] || !DatabaseHelper.UpdateDataUltimaModificaUtente(id, email))
+            if ( id != utente.Id || DatabaseHelper.SalvaUtente(utente) == null)
             {
                 ViewData["MsgKo"] = "Il link di conferma non corrisponde";
                 return View();
             }
 
-            ViewData["MsgOk"] = "Registrazione completata";
+            ViewData["MsgOk"] = "Registrazione completata e email confermata";
             return View();
         }
     }

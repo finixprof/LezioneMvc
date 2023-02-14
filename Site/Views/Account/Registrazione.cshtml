@@ -51,6 +51,10 @@
         {
             <span class="text-danger"> @Html.Raw(ViewData["MsgKo"].ToString())</span>
         }
+        else if  (ViewData["MsgOk"] != null)
+        {
+            <span class="text-succes"> @Html.Raw(ViewData["MsgOk"].ToString())</span>
+        }
     </div>
 </form>
 

@@ -155,7 +155,7 @@ namespace Site.Helpers
                         "FROM utente " +
                         "WHERE username = @username " +
                         "AND password = @password " +
-                        "AND dataUltimaModifica IS NOT NULL";
+                        "AND isMailConfermata = 1 ";
                     var utente = connection.Query<Utente>(sql, new { username, password }).FirstOrDefault();
                     return utente;
                 }
@@ -176,7 +176,7 @@ namespace Site.Helpers
                     var sql = "SELECT * " +
                         "FROM utente " +
                         "WHERE username = @username " +
-                        "AND dataUltimaModifica is NOT NULL";
+                        "AND isMailConfermata = 1 ";
                     var utente = connection.Query<Utente>(sql, new { username }).FirstOrDefault();
                     return utente;
                 }
@@ -199,7 +199,7 @@ namespace Site.Helpers
                         "FROM utente " +
                         "WHERE username = @username " +
                         //"OR email = @email " +
-                        "AND dataultimamodifica IS NOT NULL ";
+                        "AND isMailConfermata = 1 ";
                     return connection.Query<Utente>(sql, new { username }).FirstOrDefault() != null;
                 }
             }
@@ -209,22 +209,33 @@ namespace Site.Helpers
             }
         }
 
-        public static Utente InsertUtente(RegistrazioneDto dto)
+
+
+        public static Utente SalvaUtente(Utente utente)
+        {
+            if (utente.Id > 0)
+            {
+                //update
+                return UpdateUtente(utente);
+            }
+            //insert
+            return InsertUtente(utente);
+        }
+
+        private static Utente InsertUtente(Utente utente)
         {
             try
             {
                 using (var connection = new MySqlConnection(ConnectionString))
                 {
-                    var sql = "INSERT INTO utente (username, email, password) " +
-                        "VALUES (@username, @email, @password); " +
+                    var sql = "INSERT INTO utente (username, email) " +
+                        "VALUES (@username, @email); " +
                         "SELECT * " +
                         "FROM utente " +
                         "WHERE username= @username " +
-                        "AND email=@email " +
-                        "AND password = @password";
+                        "AND email=@email";
 
-                    var utente = connection.Query<Utente>(sql, new { dto.Username, dto.Email, dto.Password }).FirstOrDefault();
-                    return utente;
+                    return connection.Query<Utente>(sql, utente).FirstOrDefault();
                 }
             }
             catch (Exception ex)
@@ -245,8 +256,6 @@ namespace Site.Helpers
                     var utente = connection.Query<Utente>(sql, new { email }).FirstOrDefault();
                     return utente;
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -254,46 +263,54 @@ namespace Site.Helpers
             }
         }
 
-        public static void UpdateUtente(Utente utente)
+        private static Utente UpdateUtente(Utente utente)
         {
             try
             {
+                utente.DataUltimaModifica = DateTime.Now;
                 using (var connection = new MySqlConnection(ConnectionString))
                 {
                     var sql = "UPDATE utente " +
-                        "SET password = @password " +
-                        "WHERE id = @id";
-                    connection.Query(sql, new { utente.Password, utente.Id });
+                        "SET password = @password, " +
+                        " username = @username, " +
+                        " email = @email, " +
+                        " dataultimamodifica = @dataultimamodifica, " +
+                        " ismailconfermata = @ismailconfermata " +
+                        "WHERE id = @id; " +
+                        "SELECT * " +
+                        "FROM utente " +
+                        "WHERE id = @id; ";
+                    return connection.Query<Utente>(sql, utente).FirstOrDefault();
                 }
             }
             catch (Exception ex)
             {
-
+                return null;
             }
         }
 
-        public static bool UpdateDataUltimaModificaUtente(int id, string email)
-        {
-            try
-            {
-                using (var connection = new MySqlConnection(ConnectionString))
-                {
-                    var sql = "SET @LastUpdateID := 0; " +
-                        "UPDATE utente " +
-                        "SET dataultimamodifica = @dataultimamodifica " +
-                        ",Rno = (SELECT @LastUpdateID:= Rno)" +
-                        "WHERE id = @id " +
-                        "AND email = @email; " +
-                        "SELECT @LastUpdateID AS LastUpdateID";
+        //public static bool UpdateDataUltimaModificaUtente(int id, string email)
+        //{
+        //    try
+        //    {
+        //        using (var connection = new MySqlConnection(ConnectionString))
+        //        {
+        //            var sql = "SET @LastUpdateID := 0; " +
+        //                "UPDATE utente " +
+        //                "SET dataultimamodifica = @dataultimamodifica " +
+        //                ",Rno = (SELECT @LastUpdateID:= Rno)" +
+        //                "WHERE id = @id " +
+        //                "AND email = @email; " +
+        //                "SELECT @LastUpdateID AS LastUpdateID";
 
-                    var dataultimamodifica = DateTime.Now;
-                    return connection.Query<int>(sql, new { dataultimamodifica, id, email }).FirstOrDefault() == id;
-                }
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
+        //            var dataultimamodifica = DateTime.Now;
+        //            return connection.Query<int>(sql, new { dataultimamodifica, id, email }).FirstOrDefault() == id;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
+        //}
     }
 }
