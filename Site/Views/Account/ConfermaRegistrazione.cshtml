@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Conferma mail di registrazione";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+
+<p>
+    @if (ViewData["MsgKo"] != null)
+    {
+        <span class="text-danger"> @Html.Raw(ViewData["MsgKo"].ToString())</span>
+    }
+    else if (ViewData["MsgOk"] != null)
+    {
+        <span class="text-success"> @Html.Raw(ViewData["MsgOk"].ToString())</span>
+    }
+</p>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

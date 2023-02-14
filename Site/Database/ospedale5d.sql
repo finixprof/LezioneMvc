@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Feb 14, 2023 alle 12:04
+-- Creato il: Feb 14, 2023 alle 12:08
 -- Versione del server: 10.4.24-MariaDB
 -- Versione PHP: 8.1.6
 
@@ -22,32 +22,6 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `ospedale5d` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `ospedale5d`;
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `partecipare`
---
-
-CREATE TABLE `partecipare` (
-  `ID` int(11) NOT NULL,
-  `InQualita` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `IDPersonale` int(11) NOT NULL,
-  `IDVisita` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dump dei dati per la tabella `partecipare`
---
-
-INSERT INTO `partecipare` (`ID`, `InQualita`, `IDPersonale`, `IDVisita`) VALUES
-(1, 'Consulente', 1, 1),
-(2, NULL, 2, 1),
-(3, NULL, 3, 1),
-(4, NULL, 3, 2),
-(5, 'Assistente', 4, 1),
-(6, NULL, 4, 2),
-(7, NULL, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -157,17 +131,35 @@ INSERT INTO `visita` (`ID`, `DataVisita`, `Peso`, `Altezza`, `PressioneMin`, `Pr
 (1, '2005-11-04', 120, 2, 80, 150, 1),
 (2, '2005-11-06', 58, 2, 90, 120, 3);
 
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `visitapersonale`
+--
+
+CREATE TABLE `visitapersonale` (
+  `ID` int(11) NOT NULL,
+  `InQualita` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `IDPersonale` int(11) NOT NULL,
+  `IDVisita` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dump dei dati per la tabella `visitapersonale`
+--
+
+INSERT INTO `visitapersonale` (`ID`, `InQualita`, `IDPersonale`, `IDVisita`) VALUES
+(1, 'Consulente', 1, 1),
+(2, NULL, 2, 1),
+(3, NULL, 3, 1),
+(4, NULL, 3, 2),
+(5, 'Assistente', 4, 1),
+(6, NULL, 4, 2),
+(7, NULL, 6, 1);
+
 --
 -- Indici per le tabelle scaricate
 --
-
---
--- Indici per le tabelle `partecipare`
---
-ALTER TABLE `partecipare`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `IDPersonale` (`IDPersonale`),
-  ADD KEY `IDVisita` (`IDVisita`);
 
 --
 -- Indici per le tabelle `paziente`
@@ -195,14 +187,16 @@ ALTER TABLE `visita`
   ADD KEY `IDPaziente` (`IDPaziente`);
 
 --
--- AUTO_INCREMENT per le tabelle scaricate
+-- Indici per le tabelle `visitapersonale`
 --
+ALTER TABLE `visitapersonale`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `IDPersonale` (`IDPersonale`),
+  ADD KEY `IDVisita` (`IDVisita`);
 
 --
--- AUTO_INCREMENT per la tabella `partecipare`
+-- AUTO_INCREMENT per le tabelle scaricate
 --
-ALTER TABLE `partecipare`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT per la tabella `paziente`
@@ -229,21 +223,27 @@ ALTER TABLE `visita`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Limiti per le tabelle scaricate
+-- AUTO_INCREMENT per la tabella `visitapersonale`
 --
+ALTER TABLE `visitapersonale`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- Limiti per la tabella `partecipare`
+-- Limiti per le tabelle scaricate
 --
-ALTER TABLE `partecipare`
-  ADD CONSTRAINT `partecipare_ibfk_1` FOREIGN KEY (`IDPersonale`) REFERENCES `personale` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `partecipare_ibfk_2` FOREIGN KEY (`IDVisita`) REFERENCES `visita` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `visita`
 --
 ALTER TABLE `visita`
   ADD CONSTRAINT `visita_ibfk_1` FOREIGN KEY (`IDPaziente`) REFERENCES `paziente` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `visitapersonale`
+--
+ALTER TABLE `visitapersonale`
+  ADD CONSTRAINT `visitapersonale_ibfk_1` FOREIGN KEY (`IDPersonale`) REFERENCES `personale` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `visitapersonale_ibfk_2` FOREIGN KEY (`IDVisita`) REFERENCES `visita` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

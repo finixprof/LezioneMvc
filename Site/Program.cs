@@ -50,7 +50,10 @@ namespace Site
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             DatabaseHelper.ConnectionString = builder.Configuration.GetConnectionString("Ospedale");
-
+            EmailHelper.Email = builder.Configuration["email"];
+            EmailHelper.Password = builder.Configuration["Password"];
+            EmailHelper.PortSmtp = Convert.ToInt32(builder.Configuration["PortSmtp"]);
+            EmailHelper.HostSmtp = builder.Configuration["HostSmtp"];
 
             app.Run();
         }
