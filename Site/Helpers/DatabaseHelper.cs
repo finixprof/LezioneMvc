@@ -158,10 +158,21 @@ namespace Site.Helpers
             {
                 using (var connection = new MySqlConnection(ConnectionString))
                 {
-                    var sql = "SELECT * " +
-                        "FROM visita " +
-                        "WHERE id = @id";
-                    var visita = connection.Query<Visita>(sql, new { id = id }).FirstOrDefault();
+                    var sql = "SELECT v.*, p.* " +
+                        "FROM visita  v " +
+                        "LEFT JOIN  paziente p " +
+                        "ON v.pazienteid = p.id " +
+                        "WHERE v.id = @id";
+                    // Use the Query method to execute the query and return a list of objects
+                    var visita = connection.Query<Visita, Paziente, Visita>(sql,
+                        (visita, paziente) =>
+                        {
+                            visita.Paziente = paziente;
+                            visita.PazienteId = paziente.Id;
+                            return visita;
+                        },
+                        splitOn: "pazienteid", param: new { id }
+                        ).FirstOrDefault();
                     return visita;
                 }
 
