@@ -11,7 +11,7 @@ namespace Site.Helpers
         {
             using (MemoryStream memoryStream = new MemoryStream())
             {
-                Rijndael key = Rijndael.Create();
+                Aes key = Aes.Create();
                 key.Key = outerKey;
                 key.IV = IV;
 
@@ -47,7 +47,7 @@ namespace Site.Helpers
 
             using (MemoryStream memoryStream = new MemoryStream())
             {
-                Rijndael key = Rijndael.Create();
+                Aes key = Aes.Create();
                 key.Key = outerKey;
                 key.IV = IV;
                 using (CryptoStream cryptoStream =

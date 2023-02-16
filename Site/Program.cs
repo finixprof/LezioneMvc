@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Site.Helpers;
+using System.Net.Mail;
+using System.Net;
 
 namespace Site
 {
@@ -50,10 +52,17 @@ namespace Site
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
             DatabaseHelper.ConnectionString = builder.Configuration.GetConnectionString("Ospedale");
+
             EmailHelper.Email = builder.Configuration["email"];
             EmailHelper.Password = builder.Configuration["Password"];
             EmailHelper.PortSmtp = Convert.ToInt32(builder.Configuration["PortSmtp"]);
             EmailHelper.HostSmtp = builder.Configuration["HostSmtp"];
+            EmailHelper.SmtpClient = new SmtpClient(EmailHelper.HostSmtp)
+            {
+                Port = EmailHelper.PortSmtp,
+                Credentials = new NetworkCredential(EmailHelper.Email, EmailHelper.Password),
+                EnableSsl = true,
+            };
 
             app.Run();
         }

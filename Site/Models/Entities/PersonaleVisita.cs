@@ -3,10 +3,10 @@
     public class VisitaPersonale:EntityBase
     {
 
-        public int IdVisita { get; set; }
+        public int VisitaId { get; set; }
 
         public Visita Visita { get; set; }
-        public int IdPersonale { get; set; }
+        public int PersonaleId { get; set; }
 
         public Personale Personale { get; set; }
 

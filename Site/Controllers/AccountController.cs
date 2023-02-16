@@ -159,7 +159,7 @@ namespace Site.Controllers
                 var token = CryptoHelper.Encrypt(tokenDaCifrare);
                 var link = PathHelper.GetUrlToConfirmEmail(HttpContext.Request, utente.Id, token);
                 //invio mail
-                EmailHelper.Send(utente, link);
+                EmailHelper.SendEmailConfermaRegistrazione(utente, link);
 
                 //5)Messaggio di registrazione completata e di andare a confermare la mail
                 ViewData["MsgOk"] = "Registrazione completata, confermare l'indirizzo email";

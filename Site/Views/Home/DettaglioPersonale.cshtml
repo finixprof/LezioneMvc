@@ -38,11 +38,11 @@
         @String.Format("€ {0:00.00}", Model.Item.Stipendio)
     </div>
 </div>
-@if (Model.Item.IdSuperiore > 0)
+@if (Model.Item.SuperioreId > 0)
 {
     <div class="row">
         <div class="col-md-2">
-            <a asp-controller="Home" asp-action="DettaglioPersonale" asp-route-id="@Model.Item.IdSuperiore">Superiore</a>
+            <a asp-controller="Home" asp-action="DettaglioPersonale" asp-route-id="@Model.Item.SuperioreId">@Model.Item.SuperioreId</a>
         </div>
     </div>
 }

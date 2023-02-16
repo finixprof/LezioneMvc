@@ -45,7 +45,10 @@
             @String.Format("€ {0:00.00}", item.Stipendio)
         </div>
         <div class="col-md-2">
-            @item.Superiore
+            @if (item.SuperioreId > 0)
+            {
+                 <a asp-controller="Home" asp-action="DettaglioPersonale" asp-route-id="@item.SuperioreId">@item.Superiore.Cognome</a>
+            }
         </div>
     </div>
 }

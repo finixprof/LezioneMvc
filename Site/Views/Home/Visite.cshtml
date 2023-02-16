@@ -23,7 +23,7 @@
                 <a asp-controller="Home" asp-action="DettaglioVisita" asp-route-id="@item.Id">@item.DataVisita.ToShortDateString()</a>
             </div>
             <div class="col-md-2">
-                <a asp-controller="Home" asp-action="DettaglioPaziente" asp-route-id="@item.IdPaziente"><img src="~/imgs/patient.jpg" width="40" /></a>
+                <a asp-controller="Home" asp-action="DettaglioPaziente" asp-route-id="@item.PazienteId"><img src="~/imgs/patient.jpg" width="40" />@item.Paziente.Nome</a>
             </div>
         </div>
     }

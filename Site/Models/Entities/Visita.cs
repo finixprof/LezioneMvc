@@ -10,11 +10,11 @@
 
         public int PressioneMax { get; set; }
 
-        public int IdPaziente { get; set; }
+        public int PazienteId { get; set; }
 
         public Paziente Paziente { get; set; }
 
-        public List<Visita> Visite { get; set; }
+        public List<Personale> ListaPersonale { get; set; }
 
 
 

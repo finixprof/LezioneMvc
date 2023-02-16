@@ -18,19 +18,29 @@ namespace Site.Helpers
                 using (var connection = new MySqlConnection(ConnectionString))
                 {
                     // Create a query that retrieves all personale"    
+                    /*
                     var sql = "SELECT p.*, superiore.* " +
                         "FROM personale  p " +
                         "LEFT JOIN  personale superiore " +
-                        "ON p.idsuperiore = superiore.id";
+                        "ON p.superioreid = superiore.id";
                     // Use the Query method to execute the query and return a list of objects
                     var listPersonale = connection.Query<Personale, Personale, Personale>(sql,
-                        (personale, superiore) =>
+                        (p, superiore) =>
                         {
-                            personale.Superiore = superiore;
-                            return personale;
+                            p.Superiore = superiore;
+                            return p;
                         },
-                        splitOn: "idsuperiore"
+                        splitOn: "superioreid"
                         ).ToList();
+                    */
+                    var sql = "SELECT * " +
+                        "FROM personale  ";
+                    var listPersonale = connection.Query<Personale>(sql).ToList();
+                    foreach (var item in listPersonale)
+                    {
+                        if (item.SuperioreId > 0)
+                            item.Superiore = listPersonale.FirstOrDefault(t => t.Id == item.SuperioreId);
+                    }
                     return listPersonale;
                 }
             }
@@ -117,10 +127,21 @@ namespace Site.Helpers
                 using (var connection = new MySqlConnection(ConnectionString))
                 {
                     // Create a query that retrieves all visita"    
-                    var sql = "SELECT * " +
-                        "FROM visita";
+
+                    var sql = "SELECT v.*, p.* " +
+                        "FROM visita  v " +
+                        "LEFT JOIN  paziente p " +
+                        "ON v.pazienteid = p.id";
                     // Use the Query method to execute the query and return a list of objects
-                    var listVisite = connection.Query<Visita>(sql).ToList();
+                    var listVisite = connection.Query<Visita, Paziente, Visita>(sql,
+                        (visita, paziente) =>
+                        {
+                            visita.Paziente = paziente;
+                            visita.PazienteId = paziente.Id;
+                            return visita;
+                        },
+                        splitOn: "pazienteid"
+                        ).ToList();
                     return listVisite;
                 }
             }

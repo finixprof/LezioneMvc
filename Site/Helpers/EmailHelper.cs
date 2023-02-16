@@ -16,18 +16,13 @@ namespace Site.Helpers
         public static string Email { get; set; }
         public static string Password { get; set; }
 
+        //configurazione del client smtp
+        //spostata nel program.cs
         public static SmtpClient SmtpClient { get; set; }
 
-        public static void Send(Utente utente, string link)
+        public static void SendEmailConfermaRegistrazione(Utente utente, string link)
         {
-            //configurazione del client smtp
-            //potrei spostare questo codice nel program.cs
-            SmtpClient = new SmtpClient(HostSmtp)
-            {
-                Port = PortSmtp,
-                Credentials = new NetworkCredential(Email, Password),
-                EnableSsl = true,
-            };
+
             //preparazione della mail
             var mailMessage = new MailMessage
             {
