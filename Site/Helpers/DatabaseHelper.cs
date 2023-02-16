@@ -18,10 +18,19 @@ namespace Site.Helpers
                 using (var connection = new MySqlConnection(ConnectionString))
                 {
                     // Create a query that retrieves all personale"    
-                    var sql = "SELECT * " +
-                        "FROM personale";
+                    var sql = "SELECT p.*, superiore.* " +
+                        "FROM personale  p " +
+                        "LEFT JOIN  personale superiore " +
+                        "ON p.idsuperiore = superiore.id";
                     // Use the Query method to execute the query and return a list of objects
-                    var listPersonale = connection.Query<Personale>(sql).ToList();
+                    var listPersonale = connection.Query<Personale, Personale, Personale>(sql,
+                        (personale, superiore) =>
+                        {
+                            personale.Superiore = superiore;
+                            return personale;
+                        },
+                        splitOn: "idsuperiore"
+                        ).ToList();
                     return listPersonale;
                 }
             }

@@ -16,10 +16,13 @@ namespace Site.Helpers
         public static string Email { get; set; }
         public static string Password { get; set; }
 
+        public static SmtpClient SmtpClient { get; set; }
+
         public static void Send(Utente utente, string link)
         {
             //configurazione del client smtp
-            var smtpClient = new SmtpClient(HostSmtp)
+            //potrei spostare questo codice nel program.cs
+            SmtpClient = new SmtpClient(HostSmtp)
             {
                 Port = PortSmtp,
                 Credentials = new NetworkCredential(Email, Password),
@@ -40,7 +43,7 @@ namespace Site.Helpers
             try
             {
                 //invio della mail
-                smtpClient.Send(mailMessage);
+                SmtpClient.Send(mailMessage);
             }
             catch (Exception ex)
             {

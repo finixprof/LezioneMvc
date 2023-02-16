@@ -12,6 +12,10 @@
 
         public int IdPaziente { get; set; }
 
+        public Paziente Paziente { get; set; }
+
+        public List<Visita> Visite { get; set; }
+
 
 
     }
