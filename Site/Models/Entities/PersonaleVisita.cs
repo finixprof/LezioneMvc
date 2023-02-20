@@ -1,6 +1,6 @@
 ﻿namespace Site.Models.Entities
 {
-    public class VisitaPersonale:EntityBase
+    public class PersonaleVisita:EntityBase
     {
 
         public int VisitaId { get; set; }

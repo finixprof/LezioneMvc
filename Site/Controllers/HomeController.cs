@@ -112,6 +112,7 @@ namespace Site.Controllers
         {
             //Recupero dei dati da database con filtro id
             var visita = DatabaseHelper.GetVisitaById(id);
+            visita.ListaPersonale = DatabaseHelper.GetPersonaleByVisitaId(id);
             var model = new DettaglioVisitaViewModel();
             model.Pagina = Costanti.Pagine.Visite;
 

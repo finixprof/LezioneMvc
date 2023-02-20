@@ -28,7 +28,7 @@ namespace Site.Controllers
             model.Pagina = Costanti.Pagine.Login;
             if (ModelState.IsValid) //verifica che il model sia valido, seguendo le indicazioni delle dataannotation
             {
-                var utente = DatabaseHelper.GetUtenteByUsername(dto.Username);
+                var utente = DatabaseHelper.GetUtenteByUsernameOrEmail(dto.Username);
                 if (utente != null)
                 {
                     var password = CryptoHelper.HashSHA256($"{utente.Id}*{dto.Password}+{utente.DataCreazione.Value.ToShortDateString()}-{utente.DataCreazione.Value.ToShortTimeString()}");

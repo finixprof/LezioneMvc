@@ -126,11 +126,10 @@ namespace Site.Helpers
                 // Connect to the database
                 using (var connection = new MySqlConnection(ConnectionString))
                 {
-                    // Create a query that retrieves all visita"    
-
+                    // Create a query that retrieves all visita"
                     var sql = "SELECT v.*, p.* " +
                         "FROM visita  v " +
-                        "LEFT JOIN  paziente p " +
+                        "INNER JOIN  paziente p " +
                         "ON v.pazienteid = p.id";
                     // Use the Query method to execute the query and return a list of objects
                     var listVisite = connection.Query<Visita, Paziente, Visita>(sql,
@@ -160,7 +159,7 @@ namespace Site.Helpers
                 {
                     var sql = "SELECT v.*, p.* " +
                         "FROM visita  v " +
-                        "LEFT JOIN  paziente p " +
+                        "INNER JOIN paziente p " +
                         "ON v.pazienteid = p.id " +
                         "WHERE v.id = @id";
                     // Use the Query method to execute the query and return a list of objects
@@ -188,6 +187,8 @@ namespace Site.Helpers
 
         public static Utente Login(string username, string password)
         {
+            //in username potrebbe esserci o username o email,
+            //dipende da ciò che inserisci l'utente
             try
             {
                 using (var connection = new MySqlConnection(ConnectionString))
@@ -195,6 +196,7 @@ namespace Site.Helpers
                     var sql = "SELECT * " +
                         "FROM utente " +
                         "WHERE username = @username " +
+                        "OR email=@username" +
                         "AND password = @password " +
                         "AND isMailConfermata = 1 ";
                     var utente = connection.Query<Utente>(sql, new { username, password }).FirstOrDefault();
@@ -208,7 +210,7 @@ namespace Site.Helpers
             }
         }
 
-        public static Utente GetUtenteByUsername(string username)
+        public static Utente GetUtenteByUsernameOrEmail(string username)
         {
             try
             {
@@ -217,6 +219,7 @@ namespace Site.Helpers
                     var sql = "SELECT * " +
                         "FROM utente " +
                         "WHERE username = @username " +
+                        "OR email = @username " +
                         "AND isMailConfermata = 1 ";
                     var utente = connection.Query<Utente>(sql, new { username }).FirstOrDefault();
                     return utente;
@@ -328,6 +331,37 @@ namespace Site.Helpers
             {
                 return null;
             }
+        }
+
+        public static List<Personale> GetPersonaleByVisitaId(int id)
+        {
+            try
+            {
+                using (var connection = new MySqlConnection(ConnectionString))
+                {
+                    var sql = "SELECT p.* " +
+                        "FROM personalevisita  pv " +
+                        "INNER JOIN personale p " +
+                        "ON pv.PersonaleId = p.id " +
+                        "WHERE pv.VisitaId = @id";
+                    // Use the Query method to execute the query and return a list of objects
+                    var listaPersonale = connection.Query<PersonaleVisita, Personale, PersonaleVisita>(sql,
+                        (personalevisita, personale) =>
+                        {
+                            personalevisita.Personale = personale;
+                            personalevisita.PersonaleId = personale.Id;
+                            return personalevisita;
+                        },
+                        splitOn: "PersonaleId", param: new { id }
+                        ).Select(t=>t.Personale).ToList();
+                    return listaPersonale;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
         }
 
         //public static bool UpdateDataUltimaModificaUtente(int id, string email)
