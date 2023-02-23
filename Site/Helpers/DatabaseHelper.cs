@@ -196,7 +196,7 @@ namespace Site.Helpers
                     var sql = "SELECT * " +
                         "FROM utente " +
                         "WHERE username = @username " +
-                        "OR email=@username" +
+                        "OR email=@username " +
                         "AND password = @password " +
                         "AND isMailConfermata = 1 ";
                     var utente = connection.Query<Utente>(sql, new { username, password }).FirstOrDefault();
