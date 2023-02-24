@@ -5,6 +5,7 @@ using Site.Helpers.Extensions;
 using Site.Models;
 using Site.Models.Entities;
 using Site.Models.Views;
+using System.Data;
 
 namespace Site.Controllers
 {
@@ -21,6 +22,7 @@ namespace Site.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult CreaPersonale()
         {
             var model = new CreaPersonaleViewModel
@@ -30,5 +32,30 @@ namespace Site.Controllers
             };
             return View(model);
         }
+
+        [HttpPost]
+        public IActionResult CreaPersonale(PersonaleDto dto)
+        {
+            var model = new CreaPersonaleViewModel
+            {
+                Pagina = Costanti.Pagine.Personale,
+                ListaPersonale = DatabaseHelper.GetAllPersonale(),
+                Cognome = dto.Cognome
+            };
+            if (ModelState.IsValid)
+            {
+                if (dto.SuperioreId == 0)
+                    dto.SuperioreId = null;
+                //insert su database
+                DatabaseHelper.InsertPersonale(dto);
+
+                ViewData["MsgOk"] = "Record aggiunto con successo";
+                return View(model);
+            }
+
+            ViewData["MsgKo"] = "Record aggiunto con successo";
+            return View(model);
+        }
+
     }
 }

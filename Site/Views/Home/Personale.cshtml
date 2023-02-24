@@ -6,7 +6,12 @@
 
 <p>@Model.Testo</p>
 
-<a asp-controller="AreaRiservata" asp-action="CreaPersonale">Crea nuovo</a>
+@if (!string.IsNullOrWhiteSpace(Html.ViewContext.HttpContext.User.Identity.Name))
+{
+    <a asp-controller="AreaRiservata" asp-action="CreaPersonale"  class="btn btn-primary"  >Crea nuovo</a>
+    <br/>
+    <br />
+}
 
 <div class="row">
     <div class="col-md-2">
@@ -55,7 +60,11 @@
             }
         </div>
         <div class="col-md-1">
-            <a asp-controller="AreaRiservata" asp-action="ModificaPersonale" asp-route-id="@item.Id">Modifica</a>
+            @if (!string.IsNullOrWhiteSpace(Html.ViewContext.HttpContext.User.Identity.Name))
+            {
+                <a asp-controller="AreaRiservata" asp-action="ModificaPersonale" asp-route-id="@item.Id" class="btn btn-success btn-sm">Modifica</a>
+            }
         </div>
     </div>
+    <br/>
 }

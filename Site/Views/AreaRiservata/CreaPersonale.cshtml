@@ -59,7 +59,7 @@
                 @*<input asp-for="Reparto" class="form-control" />*@
                 <select asp-for="SuperioreId" class="form-control"
                         asp-items="@(new SelectList(Model.ListaPersonale, nameof(Site.Models.Entities.Personale.Id), nameof(Site.Models.Entities.Personale.Cognome)))">
-                    <option>Seleziona ...</option>
+                    <option value="0">Seleziona ...</option>
                 </select>
                 <span asp-validation-for="SuperioreId" class="text-danger"></span>
             </div>

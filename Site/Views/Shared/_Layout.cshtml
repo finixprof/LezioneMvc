@@ -38,9 +38,9 @@
 
                     </ul>
                     <div class="form-inline my-2 my-lg-0">
-                        @if (ViewData["UtenteLoggato"] != null)
+                        @if (!string.IsNullOrWhiteSpace(Html.ViewContext.HttpContext.User.Identity.Name))
                         {
-                            <span>@(((Utente)ViewData["UtenteLoggato"]).Email) </span>
+                            <span>@Html.ViewContext.HttpContext.User.Identity.Name</span>
                             <a class="btn btn-outline-dark my-2 my-sm-0 @(Model!=null && Model.Pagina==Costanti.Pagine.Login?"active":string.Empty)" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
 
                         }
