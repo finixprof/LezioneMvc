@@ -47,7 +47,7 @@ namespace Site.Controllers
                 if (dto.SuperioreId == 0)
                     dto.SuperioreId = null;
                 //insert su database
-                DatabaseHelper.InsertPersonale(dto);
+                DatabaseHelper.SalvaPersonale(dto);
 
                 ViewData["MsgOk"] = "Record aggiunto con successo";
                 return View(model);

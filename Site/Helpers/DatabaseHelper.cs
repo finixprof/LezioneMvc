@@ -353,7 +353,7 @@ namespace Site.Helpers
                             return personalevisita;
                         },
                         splitOn: "PersonaleId", param: new { id }
-                        ).Select(t=>t.Personale).ToList();
+                        ).Select(t => t.Personale).ToList();
                     return listaPersonale;
                 }
             }
@@ -362,6 +362,46 @@ namespace Site.Helpers
                 return null;
             }
 
+        }
+
+        private static Personale InsertPersonale(PersonaleDto dto)
+        {
+            try
+            {
+                using (var db = new MySqlConnection(ConnectionString))
+                {
+                    var sql = "INSERT" +
+                        "" +
+                        "SELECT * " +
+                        "FROM personale " +
+                        "WHERE id = LAST_INSERT_ID()";
+
+                    return db.Query<Personale>(sql, dto).FirstOrDefault();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public static Personale SalvaPersonale(PersonaleDto dto, int? id = null)
+        {
+            if (id != null && id > 0)
+            {
+                //update
+                return UpdatePersonale((int)id, dto);
+            }
+            else
+            {
+                return InsertPersonale(dto);
+            }
+        }
+
+        private static Personale UpdatePersonale(int id, PersonaleDto dto)
+        {
+            throw new NotImplementedException();
         }
 
         //public static bool UpdateDataUltimaModificaUtente(int id, string email)
