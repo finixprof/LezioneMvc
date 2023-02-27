@@ -370,8 +370,8 @@ namespace Site.Helpers
             {
                 using (var db = new MySqlConnection(ConnectionString))
                 {
-                    var sql = "INSERT" +
-                        "" +
+                    var sql = "INSERT INTO personale (cognome,datanascita, professione, reparto, stipendio, superioreid) " +
+                        "VALUES (@cognome,@datanascita, @professione, @reparto, @stipendio, @superioreid); " +
                         "SELECT * " +
                         "FROM personale " +
                         "WHERE id = LAST_INSERT_ID()";
