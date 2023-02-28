@@ -1,0 +1,89 @@
+﻿
+@model Site.Models.Views.ModificaPersonaleViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<h1>Modifica personale</h1>
+
+<hr />
+
+<form asp-action="ModificaPersonale">
+    <input asp-for="Id" type="hidden" class="form-control" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Cognome" class="control-label"></label>
+                <input asp-for="Cognome" class="form-control" />
+                <span asp-validation-for="Cognome" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="DataNascita" class="control-label"></label>
+                <input asp-for="DataNascita" class="form-control" />
+                <span asp-validation-for="DataNascita" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Professione" class="control-label"></label>
+                <input asp-for="Professione" class="form-control" />
+                <span asp-validation-for="Professione" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Reparto" class="control-label"></label>
+                <input asp-for="Reparto" class="form-control" />
+                <span asp-validation-for="Reparto" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Stipendio" class="control-label"></label>
+                <input asp-for="Stipendio" class="form-control" />
+                <span asp-validation-for="Stipendio" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="SuperioreId" class="control-label"></label>
+                @*<input asp-for="Reparto" class="form-control" />*@
+                <select asp-for="SuperioreId" class="form-control"
+                        asp-items="@(new SelectList(Model.ListaPersonale, nameof(Site.Models.Entities.Personale.Id), nameof(Site.Models.Entities.Personale.Cognome)))">
+                    <option value="0">Seleziona ...</option>
+                </select>
+                <span asp-validation-for="SuperioreId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <input type="submit" value="Aggiorna" class="btn btn-primary" />
+        @if (ViewData["MsgKo"] != null)
+        {
+            <span class="text-danger"> @Html.Raw(ViewData["MsgKo"].ToString())</span>
+        }
+        else if  (ViewData["MsgOk"] != null)
+        {
+            <span class="text-success"> @Html.Raw(ViewData["MsgOk"].ToString())</span>
+        }
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

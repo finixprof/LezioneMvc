@@ -15,7 +15,7 @@ namespace Site.Controllers
         public IActionResult Index()
         {
             var utenteLoggato = HttpContext.Session.GetObject<Utente>("UtenteLoggato");
-            if (utenteLoggato== null)
+            if (utenteLoggato == null)
                 return RedirectToAction("Login", "Account");
             ViewData["UtenteLoggato"] = utenteLoggato;
 
@@ -54,7 +54,42 @@ namespace Site.Controllers
                 return View(model);
             }
 
-            ViewData["MsgKo"] = "Record aggiunto con successo";
+            ViewData["MsgKo"] = "Errore, riprova più tardi";
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public IActionResult ModificaPersonale(int id)
+        {
+            var personale = DatabaseHelper.GetPersonaleById(id);
+            var model = new ModificaPersonaleViewModel(personale)
+            {
+                Pagina = Costanti.Pagine.Personale,
+                ListaPersonale = DatabaseHelper.GetAllPersonale()
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ModificaPersonale(PersonaleDto dto)
+        {
+            var model = new ModificaPersonaleViewModel(dto)
+            {
+                Pagina = Costanti.Pagine.Personale,
+                ListaPersonale = DatabaseHelper.GetAllPersonale(),
+            };
+            if (ModelState.IsValid && dto.Id != null && dto.Id.Value > 0)
+            {
+                //insert su database
+                var utente = DatabaseHelper.SalvaPersonale(dto);
+
+                //dopo aver creato la modifica, manderemo la.
+                ViewData["MsgOk"] = "Record aggiornato con successo";
+                return View(model);
+            }
+
+            ViewData["MsgKo"] = "Errore, riprova più tardi";
             return View(model);
         }
 

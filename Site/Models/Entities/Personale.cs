@@ -12,7 +12,7 @@
         public string Reparto { get; set; }
         public double Stipendio { get; set; }
 
-        public int SuperioreId { get; set; }
+        public int? SuperioreId { get; set; }
         public Personale Superiore { get; set; }
     }
 }

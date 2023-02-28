@@ -386,12 +386,12 @@ namespace Site.Helpers
             }
         }
 
-        public static Personale SalvaPersonale(PersonaleDto dto, int? id = null)
+        public static Personale SalvaPersonale(PersonaleDto dto)
         {
-            if (id != null && id > 0)
+            if (dto.Id != null && dto.Id.Value > 0)
             {
                 //update
-                return UpdatePersonale((int)id, dto);
+                return UpdatePersonale(dto);
             }
             else
             {
@@ -399,9 +399,28 @@ namespace Site.Helpers
             }
         }
 
-        private static Personale UpdatePersonale(int id, PersonaleDto dto)
+        private static Personale UpdatePersonale(PersonaleDto dto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var db = new MySqlConnection(ConnectionString))
+                {
+                    var sql = "UPDATE personale " +
+                        "SET cognome = @cognome, " +
+                        " dataNascita = @dataNascita, " +
+                        " professione =  @professione, " +
+                        " stipendio =  @stipendio, " +
+                        " reparto = @reparto," +
+                        " superioreId = @superioreId " +
+                        "WHERE id = @id";
+                    db.Query(sql, dto);
+                    return dto.GetPersonale();
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         //public static bool UpdateDataUltimaModificaUtente(int id, string email)
