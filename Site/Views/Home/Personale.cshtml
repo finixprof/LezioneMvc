@@ -26,13 +26,13 @@
     <div class="col-md-2">
         Reparto
     </div>
-    <div class="col-md-2">
+    <div class="col-md-1">
         Stipendio
     </div>
     <div class="col-md-1">
         Superiore
     </div>
-    <div class="col-md-1">
+    <div class="col-md-2">
     </div>
 </div>
 @foreach (var item in Model.ListaPersonale)
@@ -50,7 +50,7 @@
         <div class="col-md-2">
             @item.Reparto
         </div>
-        <div class="col-md-2">
+        <div class="col-md-1">
             @String.Format("€ {0:00.00}", item.Stipendio)
         </div>
         <div class="col-md-1">
@@ -59,10 +59,11 @@
                 <a asp-controller="Home" asp-action="DettaglioPersonale" asp-route-id="@item.SuperioreId">@item.Superiore.Cognome</a>
             }
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
             @if (!string.IsNullOrWhiteSpace(Html.ViewContext.HttpContext.User.Identity.Name))
             {
                 <a asp-controller="AreaRiservata" asp-action="ModificaPersonale" asp-route-id="@item.Id" class="btn btn-success btn-sm">Modifica</a>
+                <a asp-controller="AreaRiservata" asp-action="CancellaPersonale" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Cancella</a>
             }
         </div>
     </div>

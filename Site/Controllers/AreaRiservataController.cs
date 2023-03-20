@@ -93,5 +93,13 @@ namespace Site.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult CancellaPersonale(int id)
+        {
+            DatabaseHelper.DeletePersonaleById(id);
+
+            return RedirectToAction("Personale","Home");
+        }
+
     }
 }

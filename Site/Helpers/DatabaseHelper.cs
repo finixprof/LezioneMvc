@@ -423,6 +423,24 @@ namespace Site.Helpers
             }
         }
 
+        public static bool DeletePersonaleById(int id)
+        {
+            try
+            {
+                using (var db = new MySqlConnection(ConnectionString))
+                {
+                    var sql = "DELETE FROM personale " +
+                        "WHERE id = @id";
+                    db.Query(sql, new { id });
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         //public static bool UpdateDataUltimaModificaUtente(int id, string email)
         //{
         //    try
