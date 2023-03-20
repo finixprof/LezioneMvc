@@ -9,3 +9,13 @@
 <h1>Area Riservata</h1>
 
 <p>Ciao @(((Utente)ViewData["UtenteLoggato"]).Username)</p>
+
+@if (((Utente)ViewData["UtenteLoggato"]).Foto != null)
+{
+    <img src="/@((Utente)ViewData["UtenteLoggato"]).Foto" width="40" />
+}
+else
+{
+    <img src="~/imgs/user.png" width="40" />
+}
+<a asp-controller="AreaRiservata" asp-action="ModificaFotoUtente" asp-route-id="@(((Utente)ViewData["UtenteLoggato"]).Id)" class="btn btn-success btn-sm">Modifica foto</a>
