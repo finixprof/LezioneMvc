@@ -40,7 +40,7 @@
                     <div class="form-inline my-2 my-lg-0">
                         @if (!string.IsNullOrWhiteSpace(Html.ViewContext.HttpContext.User.Identity.Name))
                         {
-                            <span>@Html.ViewContext.HttpContext.User.Identity.Name</span>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="AreaRiservata" asp-action="Index"><span>@Html.ViewContext.HttpContext.User.Identity.Name</span></a>
                             <a class="btn btn-outline-dark my-2 my-sm-0 @(Model!=null && Model.Pagina==Costanti.Pagine.Login?"active":string.Empty)" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
 
                         }

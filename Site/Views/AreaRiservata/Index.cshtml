@@ -1,4 +1,5 @@
-﻿@using Site.Models.Entities;
+﻿@model Site.Models.Views.AreaRiservataViewModel
+@using Site.Models.Entities;
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -8,7 +9,7 @@
 
 <h1>Area Riservata</h1>
 
-<p>Ciao @(((Utente)ViewData["UtenteLoggato"]).Username)</p>
+<p>Ciao @(Model.Utente.Username)</p>
 
 @if (((Utente)ViewData["UtenteLoggato"]).Foto != null)
 {
@@ -18,4 +19,33 @@ else
 {
     <img src="~/imgs/user.png" width="40" />
 }
-<a asp-controller="AreaRiservata" asp-action="ModificaFotoUtente" asp-route-id="@(((Utente)ViewData["UtenteLoggato"]).Id)" class="btn btn-success btn-sm">Modifica foto</a>
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="ModificaFoto" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" class="form-control" type="hidden" />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="FileFoto" class="control-label"></label>
+                        <input asp-for="FileFoto" class="form-control" type="file" />
+                        <span asp-validation-for="FileFoto" class="text-danger"></span>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Modifica foto" class="btn btn-primary" />
+                @if (ViewData["MsgKo"] != null)
+                {
+                    <span class="text-danger"> @Html.Raw(ViewData["MsgKo"].ToString())</span>
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<a asp-controller="AreaRiservata" asp-action="ModificaFotoUtente" asp-route-id="@(((Utente)ViewData["UtenteLoggato"]).Id)" class="btn btn-success btn-sm">Modifica foto</a>*@

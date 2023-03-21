@@ -53,6 +53,8 @@ namespace Site
 
             DatabaseHelper.ConnectionString = builder.Configuration.GetConnectionString("Ospedale");
 
+            PathHelper.WebRootPath = app.Environment.ContentRootPath;
+
             EmailHelper.Email = builder.Configuration["email"];
             EmailHelper.Password = builder.Configuration["Password"];
             EmailHelper.PortSmtp = Convert.ToInt32(builder.Configuration["PortSmtp"]);
