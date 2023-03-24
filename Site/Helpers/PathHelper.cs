@@ -11,7 +11,12 @@
 
         public  static string GetPathUtente(int id)
         {
-            return $"{WebRootPath}\\wwwroot\\uploads\\nazioni\\{id}";
+            return $"{WebRootPath}\\wwwroot\\uploads\\utenti\\{id}";
+        }
+
+        public static string GetPathUrlUtente(int id)
+        {
+            return $"/uploads/utenti/{id}";
         }
     }
 }

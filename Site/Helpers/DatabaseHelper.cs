@@ -318,6 +318,7 @@ namespace Site.Helpers
                         "SET password = @password, " +
                         " username = @username, " +
                         " email = @email, " +
+                        " foto = @foto, " +
                         " dataultimamodifica = @dataultimamodifica, " +
                         " ismailconfermata = @ismailconfermata " +
                         "WHERE id = @id; " +

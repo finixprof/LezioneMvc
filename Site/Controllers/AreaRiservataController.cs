@@ -72,6 +72,19 @@ namespace Site.Controllers
         }
 
         [HttpGet]
+        public IActionResult ScaricaExcelPersonale()
+        {
+            var lista = DatabaseHelper.GetAllPersonale();
+
+            ExcelHelper.CreaFileExcelListaPersonale(lista);
+
+
+            return View(); //deve essere un file non una view
+        }
+
+
+
+        [HttpGet]
         public IActionResult CreaPersonale()
         {
             var model = new CreaPersonaleViewModel

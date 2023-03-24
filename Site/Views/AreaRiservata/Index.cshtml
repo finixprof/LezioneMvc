@@ -1,5 +1,6 @@
 ﻿@model Site.Models.Views.AreaRiservataViewModel
 @using Site.Models.Entities;
+@using Site.Helpers;
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -11,9 +12,9 @@
 
 <p>Ciao @(Model.Utente.Username)</p>
 
-@if (((Utente)ViewData["UtenteLoggato"]).Foto != null)
+@if (Model.Utente.Foto != null)
 {
-    <img src="/@((Utente)ViewData["UtenteLoggato"]).Foto" width="40" />
+    <img src="@(PathHelper.GetPathUrlUtente(Model.Id))/@Model.Utente.Foto" width="40" />
 }
 else
 {

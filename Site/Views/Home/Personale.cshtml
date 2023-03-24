@@ -9,6 +9,7 @@
 @if (!string.IsNullOrWhiteSpace(Html.ViewContext.HttpContext.User.Identity.Name))
 {
     <a asp-controller="AreaRiservata" asp-action="CreaPersonale"  class="btn btn-primary"  >Crea nuovo</a>
+    <a asp-controller="AreaRiservata" asp-action="ScaricaExcelPersonale" class="btn btn-info">Scarica Excel Personale</a>
     <br/>
     <br />
 }
