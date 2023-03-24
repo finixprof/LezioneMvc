@@ -76,10 +76,13 @@ namespace Site.Controllers
         {
             var lista = DatabaseHelper.GetAllPersonale();
 
-            ExcelHelper.CreaFileExcelListaPersonale(lista);
+            byte[] fileBytes = ExcelHelper.CreaFileExcelListaPersonale(lista);
 
+            //byte[] fileBytes = System.IO.File.ReadAllBytes(@"e:\personale.xlsx");
+            string fileName = "personale.xlsx";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
 
-            return View(); //deve essere un file non una view
+            //return View(); //deve essere un file non una view
         }
 
 

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Site.Helpers;
 using System.Net.Mail;
 using System.Net;
+using OfficeOpenXml;
 
 namespace Site
 {
@@ -54,6 +55,7 @@ namespace Site
             DatabaseHelper.ConnectionString = builder.Configuration.GetConnectionString("Ospedale");
 
             PathHelper.WebRootPath = app.Environment.ContentRootPath;
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; //per attivare la licenza non commerciale
 
             EmailHelper.Email = builder.Configuration["email"];
             EmailHelper.Password = builder.Configuration["Password"];
